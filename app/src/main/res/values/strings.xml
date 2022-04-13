@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">QLDatHangSanPham</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile">Thông tin cá nhân</string>
+    <string name="customer_label">Quản lý thông tin khách hàng</string>
+    <string name="customer_form_label">Thông tin khách hàng</string>
+
+    <string name="maKH">Mã khách hàng</string>
+    <string name="tenKH">Tên khách hàng</string>
+    <string name="diaChi">Địa chỉ</string>
+    <string name="soDT">Số điện thoại</string>
+</resources>
