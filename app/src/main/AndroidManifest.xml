@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QLDatHangSanPham">
         <activity
+            android:name=".UI.SanPham.ListSanPham"
+            android:exported="false" />
+        <activity
             android:name=".CustomerFormActivity"
             android:exported="false"
             android:label="@string/customer_form_label"
