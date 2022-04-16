@@ -1,4 +1,4 @@
-package com.example.qldathangsanpham;
+package com.example.qldathangsanpham.ui.customer;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.qldathangsanpham.R;
 
 public class AngDoDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "QLDatHangSanPham"; // the name of our database

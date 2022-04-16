@@ -1,4 +1,4 @@
-package com.example.qldathangsanpham;
+package com.example.qldathangsanpham.ui.customer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,10 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.qldathangsanpham.R;
 
 public class CustomerFormActivity extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public class CustomerFormActivity extends AppCompatActivity {
         SQLiteOpenHelper angDoDatabaseHelper = new AngDoDatabaseHelper(this);
         try {
             SQLiteDatabase db = angDoDatabaseHelper.getReadableDatabase();
-            Cursor cursor = db.query ("KHACHHANG", new String[] {"maKH", "tenKH", "diaChi","soDT", "avatar"},
+            Cursor cursor = db.query("KHACHHANG", new String[]{"maKH", "tenKH", "diaChi", "soDT", "avatar"},
                     null,
                     null,
                     null, null, null);
@@ -34,26 +35,26 @@ public class CustomerFormActivity extends AppCompatActivity {
                 String soDT = cursor.getString(3);
                 int resourceId = cursor.getInt(4);
 
-                TextView tvMaKH = (TextView)findViewById(R.id.maKH);
+                TextView tvMaKH = (TextView) findViewById(R.id.maKH);
                 tvMaKH.setText(maKH);
 
-                TextView tvtenKH = (TextView)findViewById(R.id.tenKH);
+                TextView tvtenKH = (TextView) findViewById(R.id.tenKH);
                 tvtenKH.setText(tenKH);
 
-                TextView tvDiaChi = (TextView)findViewById(R.id.diaChi);
+                TextView tvDiaChi = (TextView) findViewById(R.id.diaChi);
                 tvDiaChi.setText(diaChi);
 
-                TextView tvSoDT = (TextView)findViewById(R.id.soDT);
+                TextView tvSoDT = (TextView) findViewById(R.id.soDT);
                 tvSoDT.setText(soDT);
 
-                ImageView ivAvatar = (ImageView)findViewById(R.id.avatar);
+                ImageView ivAvatar = (ImageView) findViewById(R.id.avatar);
                 ivAvatar.setImageResource(resourceId);
                 ivAvatar.setContentDescription("Avatar");
             }
-            cursor.close();;
+            cursor.close();
+            ;
             db.close();
-        }
-        catch (SQLiteException e){
+        } catch (SQLiteException e) {
             Toast toast = Toast.makeText(this,
                     "Database unavailable", Toast.LENGTH_SHORT);
             toast.show();

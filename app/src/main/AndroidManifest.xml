@@ -10,23 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QLDatHangSanPham">
         <activity
-            android:name=".UI.SanPham.ListSanPham"
+            android:name=".ui.product.ListSanPham"
             android:exported="false" />
         <activity
-            android:name=".CustomerFormActivity"
+            android:name=".ui.customer.CustomerFormActivity"
             android:exported="false"
             android:label="@string/customer_form_label"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".ui.customer.MainActivity" />
         <activity
-            android:name=".CustomerActivity"
+            android:name=".ui.customer.CustomerActivity"
             android:exported="false"
             android:label="@string/customer_label"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".ui.customer.MainActivity" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ui.customer.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.customer.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.qldathangsanpham.Model;
+package com.example.qldathangsanpham.model;
 
 public class SanPham {
     private int masp;

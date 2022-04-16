@@ -1,4 +1,4 @@
-package com.example.qldathangsanpham.UI.SanPham;
+package com.example.qldathangsanpham.ui.product;
 
 import android.os.Bundle;
 
