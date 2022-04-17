@@ -5,10 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.example.qldathangsanpham.model.SanPham;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // creating a constant variables for our database.
     // below variable is for our database name.
+    private static final String TAG = DatabaseHelper.class.getName();
     private static final String DB_NAME = "QUAN_LY_DAT_HANG"; // the name of our database
     private static final int DB_VERSION = 1; // the version of the database
     private static final String TB_HO_SO_NHAN_VIEN = "HoSoNhanVien";
@@ -99,15 +106,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         updateMyDatabase(db, oldVersion, newVersion);
     }
 
-//    private static void insertDrink(SQLiteDatabase db, String name, String description,
-//                                    int resourceId) {
-//        ContentValues drinkValues = new ContentValues();
-//        drinkValues.put("NAME", name);
-//        drinkValues.put("DESCRIPTION", description);
-//        drinkValues.put("IMAGE_RESOURCE_ID", resourceId);
-//        db.insert("DRINK", null, drinkValues);
-//    }
-
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
             db.execSQL(QUERY_CREATE_TB_TAI_KHOAN_NHAN_VIEN);
@@ -118,24 +116,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TB_CT_DON_DAT_HANG);
 
         }
-//        if (oldVersion < 2) {
-//            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
-//        }
     }
 
-    public static int nextAutoIncrement(SQLiteDatabase db, String table){
-        String query = "SELECT MAX(_id) AS max_id FROM "+ table;
+    public static int nextAutoIncrement(SQLiteDatabase db, String table) {
+        String query = "SELECT MAX(_id) AS max_id FROM " + table;
         Cursor cursor = db.rawQuery(query, null);
 
         int id = 0;
-        if (cursor.moveToFirst())
-        {
-            do
-            {
+        if (cursor.moveToFirst()) {
+            do {
                 id = cursor.getInt(0);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
-        return id+1;
+        return id + 1;
     }
 
     public static void insertCustomer(SQLiteDatabase db, String tenKH, String diaChi,
@@ -154,10 +147,91 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         customerValues.put(CL_HO_TEN, tenKH);
         customerValues.put(CL_DIA_CHI, diaChi);
         customerValues.put(CL_SDT, soDT);
-        db.update(TB_HO_SO_KHACH_HANG, customerValues, "_id = ?", new String[] {maKH});
+        db.update(TB_HO_SO_KHACH_HANG, customerValues, "_id = ?", new String[]{maKH});
     }
 
     public static void deleteCustomer(SQLiteDatabase db, String maKH) {
-        db.delete(TB_HO_SO_KHACH_HANG, "_id = ?", new String[] {maKH});
+        db.delete(TB_HO_SO_KHACH_HANG, "_id = ?", new String[]{maKH});
+    }
+
+    public List<SanPham> getAllSanPham() {
+        List<SanPham> list = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_SAN_PHAM, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    SanPham sp = new SanPham();
+                    sp.setMasp(Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(CL_ID))));
+                    sp.setTensp(cursor.getString(cursor.getColumnIndexOrThrow(CL_TEN_SAN_PHAM)));
+                    sp.setGia(Double.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(CL_DON_GIA))));
+                    sp.setXuatXu(cursor.getString(cursor.getColumnIndexOrThrow(CL_XUAT_XU)));
+                    sp.setImg(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(CL_XUAT_XU))));
+
+                    list.add(sp);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to get list sanpham from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
+
+    public void addSanPham(SanPham sp) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(CL_TEN_SAN_PHAM, sp.getTensp());
+            values.put(CL_XUAT_XU, sp.getXuatXu());
+            values.put(CL_DON_GIA, sp.getGia());
+
+            db.insertOrThrow(TB_SAN_PHAM, null, values);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to add san pham");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void updateSanPham(SanPham sp) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(CL_TEN_SAN_PHAM, sp.getTensp());
+            values.put(CL_XUAT_XU, sp.getXuatXu());
+            values.put(CL_DON_GIA, sp.getGia());
+
+            db.update(TB_SAN_PHAM, values, "_id=?", new String[]{String.valueOf(sp.getMasp())});
+
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to add or update sanpham");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void deleteSanPham(long id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            db.delete(TB_SAN_PHAM, "_id=?", new String[]{String.valueOf(id)});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to delete san pham");
+        } finally {
+            db.endTransaction();
+        }
     }
 }
