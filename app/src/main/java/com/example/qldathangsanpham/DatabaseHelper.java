@@ -204,19 +204,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateSanPham(SanPham sp) {
         SQLiteDatabase db = getWritableDatabase();
 
-        db.beginTransaction();
+//        db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
             values.put(CL_TEN_SAN_PHAM, sp.getTensp());
             values.put(CL_XUAT_XU, sp.getXuatXu());
             values.put(CL_DON_GIA, sp.getGia());
 
-            db.update(TB_SAN_PHAM, values, "_id=?", new String[]{String.valueOf(sp.getMasp())});
+            int t = db.update(TB_SAN_PHAM, values, "_id=?", new String[]{String.valueOf(sp.getMasp())});
+
+            Log.d(TAG, "UPDATE: " + t);
+//            try {
+//                db.execSQL("UPDATE SANPHAM SET TENSANPHAM=?, xuatxu=?, dongia=?", new String[] {sp.getTensp(), sp.getXuatXu(), String.valueOf(sp.getGia())});
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 
         } catch (Exception e) {
             Log.d(TAG, "Error while trying to update sanpham");
         } finally {
-            db.endTransaction();
+//            db.endTransaction();
         }
     }
 

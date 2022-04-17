@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.qldathangsanpham.R;
+import com.example.qldathangsanpham.Utility;
 import com.example.qldathangsanpham.model.SanPham;
 
 import java.util.List;
@@ -43,9 +44,9 @@ public class CustomSanPhamAdapter extends ArrayAdapter<SanPham> {
 
         SanPham sp = objects.get(position);
 
-        tensp.setText(sp.getTensp());
-        xuatXu.setText(sp.getXuatXu());
-        gia.setText(String.valueOf(sp.getGia()));
+        tensp.setText(String.format("%s", sp.getTensp()));
+        xuatXu.setText(String.format("Xuất xứ: %s", sp.getXuatXu()));
+        gia.setText(Utility.showGia(sp.getGia()));
 
         return convertView;
     }
