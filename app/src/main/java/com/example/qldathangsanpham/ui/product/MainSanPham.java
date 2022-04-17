@@ -31,7 +31,7 @@ import java.util.List;
 public class MainSanPham extends AppCompatActivity {
     private static final String TAG = MainSanPham.class.getName();
 
-    public static List<SanPham> sanPhamList;
+    List<SanPham> sanPhamList;
     DatabaseHelper db;
 
     SanPhamAdapter adapter;
@@ -49,6 +49,9 @@ public class MainSanPham extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        Log.d(TAG, "San pham list size: " + sanPhamList.size());
+        adapter.setList(sanPhamList);
     }
 
     @Override
@@ -72,7 +75,7 @@ public class MainSanPham extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.filterList(newText);
+                adapter.getFilter().filter(newText.toString());
                 return false;
             }
         });

@@ -52,14 +52,19 @@ public class FormSanPham extends AppCompatActivity {
             them.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    sp.setTensp(String.valueOf(tensp.getText()));
-                    sp.setXuatXu(String.valueOf(xuatXu.getText()));
-                    sp.setGia(Double.parseDouble(String.valueOf(gia.getText())));
+                    try {
+                        sp.setTensp(String.valueOf(tensp.getText()).trim());
+                        sp.setXuatXu(String.valueOf(xuatXu.getText()).trim());
+                        sp.setGia(Double.parseDouble(String.valueOf(gia.getText()).trim()));
 
-                    db.updateSanPham(sp);
-                    Toast.makeText(view.getContext(), "Sửa thành công", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK);
-                    finish();
+                        db.updateSanPham(sp);
+                        Toast.makeText(view.getContext(), "Sửa thành công", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(view.getContext(), "Sửa thất bại", Toast.LENGTH_SHORT).show();
+                    } finally {
+                        setResult(RESULT_OK);
+                        finish();
+                    }
                 }
             });
 
@@ -82,15 +87,20 @@ public class FormSanPham extends AppCompatActivity {
                 public void onClick(View view) {
                     SanPham sp = new SanPham();
 
-                    sp.setTensp(String.valueOf(tensp.getText()));
-                    sp.setXuatXu(String.valueOf(xuatXu.getText()));
-                    sp.setGia(Double.valueOf(String.valueOf(gia.getText())));
+                    try {
+                        sp.setTensp(String.valueOf(tensp.getText()).trim());
+                        sp.setXuatXu(String.valueOf(xuatXu.getText()).trim());
+                        sp.setGia(Double.valueOf(String.valueOf(gia.getText()).trim()));
 
-                    db.addSanPham(sp);
+                        db.addSanPham(sp);
 
-                    Toast.makeText(view.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    setResult(Activity.RESULT_OK);
-                    finish();
+                        Toast.makeText(view.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(view.getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    } finally {
+                        setResult(Activity.RESULT_OK);
+                        finish();
+                    }
                 }
             });
 
