@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.qldathangsanpham">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,8 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QLDatHangSanPham">
         <activity
-            android:name=".ui.product.ListSanPham"
+            android:name=".ui.product.MainSanPham"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ui.product.SanPhamView"
             android:exported="false" />
+        <activity
+            android:name=".ui.product.FormSanPham"
+            android:exported="false"
+            android:label="Thông tin sản phẩm" />
         <activity
             android:name=".ui.customer.CustomerFormActivity"
             android:exported="false"

@@ -164,17 +164,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     SanPham sp = new SanPham();
-                    sp.setMasp(Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(CL_ID))));
+                    sp.setMasp((int) Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(CL_ID))));
                     sp.setTensp(cursor.getString(cursor.getColumnIndexOrThrow(CL_TEN_SAN_PHAM)));
                     sp.setGia(Double.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(CL_DON_GIA))));
                     sp.setXuatXu(cursor.getString(cursor.getColumnIndexOrThrow(CL_XUAT_XU)));
-                    sp.setImg(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(CL_XUAT_XU))));
 
                     list.add(sp);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying to get list sanpham from database");
+            Log.d(TAG, "Error while trying to get list sanpham");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -215,7 +214,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.update(TB_SAN_PHAM, values, "_id=?", new String[]{String.valueOf(sp.getMasp())});
 
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying to add or update sanpham");
+            Log.d(TAG, "Error while trying to update sanpham");
         } finally {
             db.endTransaction();
         }
