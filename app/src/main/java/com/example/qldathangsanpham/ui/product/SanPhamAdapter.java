@@ -16,12 +16,12 @@ import com.example.qldathangsanpham.model.SanPham;
 
 import java.util.List;
 
-public class CustomSanPhamAdapter extends ArrayAdapter<SanPham> {
+public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     Context context;
     int resource;
     List<SanPham> objects;
 
-    public CustomSanPhamAdapter(@NonNull Context context, int resource, @NonNull List<SanPham> objects) {
+    public SanPhamAdapter(@NonNull Context context, int resource, @NonNull List<SanPham> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -50,4 +50,10 @@ public class CustomSanPhamAdapter extends ArrayAdapter<SanPham> {
 
         return convertView;
     }
+
+    public void setList(List<SanPham> list) {
+        this.objects = list;
+        notifyDataSetChanged();
+    }
+
 }

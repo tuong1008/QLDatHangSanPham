@@ -29,7 +29,7 @@ public class MainSanPham extends AppCompatActivity {
     public static List<SanPham> sanPhamList;
     DatabaseHelper db;
 
-    CustomSanPhamAdapter adapter;
+    SanPhamAdapter adapter;
     ListView list;
     FloatingActionButton add;
 
@@ -44,16 +44,6 @@ public class MainSanPham extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        sanPhamList = db.getAllSanPham();
-//        adapter = new CustomSanPhamAdapter(this, R.layout.activity_san_pham_view, sanPhamList);
-//        list.setAdapter(adapter);
-
-//        adapter = (CustomSanPhamAdapter) list.getAdapter();
-
-//        adapter = new CustomSanPhamAdapter(this, R.layout.activity_san_pham_view, sanPhamList);
-//        list.setAdapter(adapter);
-//        adapter.setNotifyOnChange(true);
-//        sanPhamList = db.getAllSanPham();
     }
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
@@ -61,15 +51,12 @@ public class MainSanPham extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
+                    // There are no request codes
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Log.d(TAG, "loading new data");
-
                         Intent data = result.getData();
-                        sanPhamList = db.getAllSanPham();
 
-                        adapter = new CustomSanPhamAdapter(MainSanPham.this, R.layout.activity_san_pham_view, sanPhamList);
-                        list.setAdapter(adapter);
+                        sanPhamList = db.getAllSanPham();
+                        adapter.setList(sanPhamList);
                     }
                 }
             });
@@ -89,7 +76,7 @@ public class MainSanPham extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        adapter = new CustomSanPhamAdapter(this, R.layout.activity_san_pham_view, sanPhamList);
+        adapter = new SanPhamAdapter(this, R.layout.activity_san_pham_view, sanPhamList);
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
