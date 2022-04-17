@@ -12,17 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QLDatHangSanPham">
         <activity
-            android:name=".CustomerFormActivity"
+            android:name=".ui.product.ListSanPham"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.CustomerFormActivity"
             android:exported="false"
             android:label="@string/customer_form_label"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".CustomerActivity"
+            android:name=".ui.customer.CustomerActivity"
             android:exported="false"
             android:label="@string/customer_label"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ui.customer.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

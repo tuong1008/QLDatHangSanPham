@@ -1,4 +1,4 @@
-package com.example.qldathangsanpham;
+package com.example.qldathangsanpham.ui.customer;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -30,15 +30,16 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import com.example.qldathangsanpham.DatabaseHelper;
+import com.example.qldathangsanpham.R;
 
 public class CustomerFormActivity extends AppCompatActivity {
     final int MyVersion = Build.VERSION.SDK_INT;
@@ -96,7 +97,7 @@ public class CustomerFormActivity extends AppCompatActivity {
 
     public void onClickInsertOrUpdate(View view){
         SQLiteOpenHelper andDoDatabaseHelper =
-                new AngDoDatabaseHelper(CustomerFormActivity.this);
+                new DatabaseHelper(CustomerFormActivity.this);
 
         EditText tenKH = findViewById(R.id.tenKH);
         EditText diaChi = findViewById(R.id.diaChi);
@@ -111,7 +112,7 @@ public class CustomerFormActivity extends AppCompatActivity {
 
         if (strAddOrUpdate.equals("Thêm")){
             SQLiteDatabase db = andDoDatabaseHelper.getWritableDatabase();
-            int nextID = AngDoDatabaseHelper.nextAutoIncrement(db, "KHACHHANG", "maKH");
+            int nextID = DatabaseHelper.nextAutoIncrement(db, "HoSoKhachHang");
 
             //save avatar to internal storage
             BitmapDrawable drawable = (BitmapDrawable) avatar.getDrawable();
@@ -139,7 +140,7 @@ public class CustomerFormActivity extends AppCompatActivity {
             }
 
             try {
-                AngDoDatabaseHelper.insertCustomer(db, strTenKH, strDiaChi, strSoDT, myPath.getAbsolutePath());
+                DatabaseHelper.insertCustomer(db, strTenKH, strDiaChi, strSoDT, myPath.getAbsolutePath());
                 Toast.makeText(this, "Inserted", Toast.LENGTH_SHORT).show();
             } catch(SQLiteException e) {
                 e.printStackTrace();
@@ -171,7 +172,7 @@ public class CustomerFormActivity extends AppCompatActivity {
 
             try {
                 SQLiteDatabase db = andDoDatabaseHelper.getWritableDatabase();
-                AngDoDatabaseHelper.updateCustomer(db, strTenKH, strDiaChi, strSoDT, strMaKH);
+                DatabaseHelper.updateCustomer(db, strTenKH, strDiaChi, strSoDT, strMaKH);
                 Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
             } catch(SQLiteException e) {
                 e.printStackTrace();
@@ -182,14 +183,14 @@ public class CustomerFormActivity extends AppCompatActivity {
 
     public void onClickDelete(View view){
         SQLiteOpenHelper andDoDatabaseHelper =
-                new AngDoDatabaseHelper(CustomerFormActivity.this);
+                new DatabaseHelper(CustomerFormActivity.this);
 
         EditText maKH = findViewById(R.id.maKH);
         String strMaKH =  maKH.getText().toString();
 
         try {
             SQLiteDatabase db = andDoDatabaseHelper.getWritableDatabase();
-            AngDoDatabaseHelper.deleteCustomer(db, strMaKH);
+            DatabaseHelper.deleteCustomer(db, strMaKH);
             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
         } catch(SQLiteException e) {
             e.printStackTrace();
@@ -213,11 +214,11 @@ public class CustomerFormActivity extends AppCompatActivity {
         } else {
             //Update mode
             //Create a cursor
-            SQLiteOpenHelper angDoDatabaseHelper = new AngDoDatabaseHelper(this);
+            SQLiteOpenHelper angDoDatabaseHelper = new DatabaseHelper(this);
             try {
                 SQLiteDatabase db = angDoDatabaseHelper.getReadableDatabase();
-                Cursor cursor = db.query ("KHACHHANG", new String[] {"maKH", "tenKH", "diaChi","soDT", "avatar"},
-                        "maKH=?",
+                Cursor cursor = db.query ("HoSoKhachHang", new String[] {"_id", "hoTen", "diaChi","sdt", "avatar"},
+                        "_id=?",
                         new String[] {Integer.toString(intMaKH)},
                         null, null, null);
                 if (cursor.moveToFirst()) {

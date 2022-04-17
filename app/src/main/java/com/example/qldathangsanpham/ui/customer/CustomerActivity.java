@@ -1,4 +1,4 @@
-package com.example.qldathangsanpham;
+package com.example.qldathangsanpham.ui.customer;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,19 +6,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.provider.BaseColumns;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.qldathangsanpham.DatabaseHelper;
+import com.example.qldathangsanpham.R;
 
 public class CustomerActivity extends AppCompatActivity {
 
@@ -46,7 +46,7 @@ public class CustomerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Cursor newCursor = db.query("KHACHHANG", new String[]{"maKH as " + BaseColumns._ID, "tenKH"},
+        Cursor newCursor = db.query("HoSoKhachHang", new String[]{"_id", "hoTen"},
                 null, null, null, null, null);
 
         ListView listFavorites = findViewById(R.id.list);
@@ -59,12 +59,12 @@ public class CustomerActivity extends AppCompatActivity {
     private void setCustomersListView(){
         ListView listCustomers = findViewById(R.id.list);
         try{
-            SQLiteOpenHelper angDoDatabaseHelper = new AngDoDatabaseHelper(this);
+            SQLiteOpenHelper angDoDatabaseHelper = new DatabaseHelper(this);
             db = angDoDatabaseHelper.getReadableDatabase();
-            customersCursor = db.query("KHACHHANG", new String[]{"maKH as " + BaseColumns._ID, "tenKH"},
+            customersCursor = db.query("HoSoKhachHang", new String[]{"_id", "hoTen"},
                     null, null, null, null, null);
             CursorAdapter customerAdapter =
-                    new SimpleCursorAdapter(CustomerActivity.this, android.R.layout.simple_list_item_1, customersCursor, new String[]{"tenKH"}, new int[]{android.R.id.text1},0);
+                    new SimpleCursorAdapter(CustomerActivity.this, android.R.layout.simple_list_item_1, customersCursor, new String[]{"hoTen"}, new int[]{android.R.id.text1},0);
             listCustomers.setAdapter(customerAdapter);
 
 //            String tableName = "KhachHang";
