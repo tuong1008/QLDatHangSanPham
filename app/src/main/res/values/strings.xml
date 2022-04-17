@@ -5,6 +5,7 @@
     <string name="profile">Thông tin cá nhân</string>
     <string name="customer_label">Quản lý thông tin khách hàng</string>
     <string name="customer_form_label">Thông tin khách hàng</string>
+    <string name="insert_label">Thêm</string>
 
     <string name="maKH">Mã khách hàng</string>
     <string name="tenKH">Tên khách hàng</string>

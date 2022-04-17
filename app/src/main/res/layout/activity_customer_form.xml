@@ -10,6 +10,12 @@
         android:layout_width="190dp"
         android:layout_height="190dp"
         android:id="@+id/avatar"/>
+    <Button
+        android:id="@+id/buttonLoadPicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tải ảnh lên"
+        android:onClick="onLoadPicture"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,5 +36,17 @@
         android:layout_height="wrap_content"
         android:hint="@string/soDT"
         android:id="@+id/soDT"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnInsert"
+        android:text="Thêm"
+        android:onClick="onClickInsertOrUpdate"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDelete"
+        android:text="Xóa"
+        android:onClick="onClickDelete"/>
 
 </LinearLayout>
