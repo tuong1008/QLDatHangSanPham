@@ -20,12 +20,15 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     Context context;
     int resource;
     List<SanPham> objects;
+    SanPhamFilter filter;
 
     public SanPhamAdapter(@NonNull Context context, int resource, @NonNull List<SanPham> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
         this.objects = objects;
+
+        this.filter = new SanPhamFilter(objects, this);
     }
 
     @Override
@@ -56,4 +59,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
         notifyDataSetChanged();
     }
 
+    public void filterList(String text) {
+        filter.filter(text);
+    }
 }
