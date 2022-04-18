@@ -63,7 +63,7 @@ public class CustomerFormActivity extends AppCompatActivity {
     }
 
     private boolean checkIfAlreadyHavePermission() {
-        int result = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
         return result == PackageManager.PERMISSION_GRANTED;
     }
 

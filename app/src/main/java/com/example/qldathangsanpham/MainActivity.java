@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.qldathangsanpham.ui.customer.CustomerActivity;
 import com.example.qldathangsanpham.ui.customer.ProfileActivity;
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_create_order:
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.export_pdf:
+                Toast.makeText(this, "export pdf", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
