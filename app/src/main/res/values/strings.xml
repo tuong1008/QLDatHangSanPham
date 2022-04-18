@@ -12,4 +12,7 @@
     <string name="tenKH">Tên khách hàng</string>
     <string name="diaChi">Địa chỉ</string>
     <string name="soDT">Số điện thoại</string>
+    <string name="tenSP">Tên sản phẩm</string>
+    <string name="xuatXu">Xuất xứ</string>
+    <string name="gia">Giá</string>
 </resources>

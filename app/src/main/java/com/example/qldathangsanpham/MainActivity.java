@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.qldathangsanpham.ui.customer.CustomerActivity;
 import com.example.qldathangsanpham.ui.customer.ProfileActivity;
+import com.example.qldathangsanpham.ui.product.MainSanPham;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,11 +52,17 @@ public class MainActivity extends AppCompatActivity {
         l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent;
                 switch (position){
                     case 1:
-                        Intent intent = new Intent(MainActivity.this, CustomerActivity.class);
+                        intent = new Intent(MainActivity.this, CustomerActivity.class);
                         startActivity(intent);
                         break;
+                    case 2:
+                        intent = new Intent(MainActivity.this, MainSanPham.class);
+                        startActivity(intent);
+                        break;
+
                 }
             }
         });
