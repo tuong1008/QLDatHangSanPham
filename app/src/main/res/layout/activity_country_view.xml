@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="Germany" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/countryName"
@@ -24,10 +24,10 @@
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/countryEmoji"
         android:gravity="center"
-        android:text="Germany"
         android:textSize="18sp" />
 
     <ImageView
+        android:id="@+id/arrow"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_alignParentRight="true"

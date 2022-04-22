@@ -7,10 +7,11 @@
     tools:context=".ui.product.FormSanPham">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         tools:layout_editor_absoluteX="-9dp">
 
         <EditText
@@ -31,16 +32,28 @@
             android:inputType="numberSigned|number"
             android:maxLines="1" />
 
-        <Spinner
-            android:id="@+id/xuatXu"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:background="@drawable/blue_border"
-            android:popupBackground="@drawable/spinner_outline_bg"
-            android:spinnerMode="dropdown"
-            android:overlapAnchor="false"
-            tools:listitem="@layout/activity_country_view" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/xuatXu"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/xuatXu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_border"
+                android:overlapAnchor="false"
+                android:popupBackground="@drawable/spinner_outline_bg"
+                android:spinnerMode="dropdown"
+                tools:listitem="@layout/activity_country_view" />
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

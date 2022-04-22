@@ -46,16 +46,16 @@ public class FormSanPham extends AppCompatActivity {
 
         countryAdapter = new CountryAdapter(this);
         xuatXu.setAdapter(countryAdapter);
-        xuatXu.setSelection(0);
 
-        // intent is to edit/delete
+        // intent is to edit
         if (getIntent().hasExtra("SAN_PHAM")) {
             them.setText("Sửa");
 
             SanPham sp = (SanPham) getIntent().getSerializableExtra("SAN_PHAM");
 
             tensp.setText(sp.getTensp());
-//            xuatXu.setText(sp.getXuatXu());
+
+            xuatXu.setSelection(Country.valueOf(sp.getXuatXu()).ordinal() + 1);
 
             DecimalFormat format = new DecimalFormat("0.#");
             gia.setText(format.format(sp.getGia()));
@@ -100,6 +100,7 @@ public class FormSanPham extends AppCompatActivity {
         } else {
             xoa.setVisibility(View.INVISIBLE);
             them.setText("Thêm");
+            xuatXu.setSelection(0);
 
             them.setOnClickListener(new View.OnClickListener() {
                 @Override

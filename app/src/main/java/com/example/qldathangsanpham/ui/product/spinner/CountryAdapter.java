@@ -45,31 +45,32 @@ public class CountryAdapter extends ArrayAdapter<Country> {
         return Country.getCountryById(countryList.get(position - 1).getId());
     }
 
+    @Override
+    public int getPosition(@Nullable Country item) {
+        return Country.valueOf(item.getId()).ordinal() + 1;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view;
+        if (position == 0) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.activity_country_header, parent, false);
+            }
+        } else if (position > 0) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.activity_country_view, parent, false);
+            }
 
-        if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.activity_country_view, parent, false);
-        } else {
-            view = convertView;
-        }
-//        view = LayoutInflater.from(context).inflate(R.layout.activity_country_view, parent, false);
-
-//        Country c = Country.getCountryById(countryList.get(position).getId());
-
-        if (position > 0) {
             Country c = countryList.get(position - 1);
 
-            TextView countryName = view.findViewById(R.id.countryName);
-            TextView countryEmoji = view.findViewById(R.id.countryEmoji);
+            TextView countryName = convertView.findViewById(R.id.countryName);
+            TextView countryEmoji = convertView.findViewById(R.id.countryEmoji);
 
             countryName.setText(c.getName());
             countryEmoji.setText(c.getEmoji());
         }
-
-        return view;
+        return convertView;
     }
 
     @Override
@@ -92,13 +93,13 @@ public class CountryAdapter extends ArrayAdapter<Country> {
             TextView countryName = view.findViewById(R.id.countryName);
             TextView countryEmoji = view.findViewById(R.id.countryEmoji);
 
+            view.findViewById(R.id.arrow).setVisibility(View.INVISIBLE);
+
             Country c = countryList.get(position - 1);
 
             countryName.setText(c.getName());
             countryEmoji.setText(c.getEmoji());
-
         }
-
         return view;
     }
 }
