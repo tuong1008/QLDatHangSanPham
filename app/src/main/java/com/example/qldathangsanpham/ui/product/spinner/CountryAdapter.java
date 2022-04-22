@@ -33,7 +33,7 @@ public class CountryAdapter extends ArrayAdapter<Country> {
 
     @Override
     public boolean isEnabled(int position) {
-        return position != 0;
+        return position > 0;
     }
 
     @Nullable

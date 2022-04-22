@@ -50,7 +50,7 @@ public class MainSanPham extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Log.d(TAG, "San pham list size: " + sanPhamList.size());
+//        Log.d(TAG, "San pham list size: " + sanPhamList.size());
         adapter.setList(sanPhamList);
     }
 
@@ -75,7 +75,8 @@ public class MainSanPham extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText.toString());
+                adapter.getFilter().filter(newText);
+
                 return false;
             }
         });
@@ -83,12 +84,11 @@ public class MainSanPham extends AppCompatActivity {
         return true;
     }
 
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+    ActivityResultLauncher<Intent> sanPhamFormLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    // There are no request codes
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
 
@@ -113,15 +113,14 @@ public class MainSanPham extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        adapter = new SanPhamAdapter(this, R.layout.activity_san_pham_view, sanPhamList);
+        adapter = new SanPhamAdapter(this, sanPhamList);
         list.setAdapter(adapter);
-
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = new Intent(MainSanPham.this, FormSanPham.class);
                 intent.putExtra("SAN_PHAM", sanPhamList.get(position));
-                someActivityResultLauncher.launch(intent);
+                sanPhamFormLauncher.launch(intent);
             }
         });
 
@@ -129,7 +128,7 @@ public class MainSanPham extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), FormSanPham.class);
-                someActivityResultLauncher.launch(intent);
+                sanPhamFormLauncher.launch(intent);
             }
         });
     }

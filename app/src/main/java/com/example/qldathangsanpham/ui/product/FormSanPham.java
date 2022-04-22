@@ -73,8 +73,8 @@ public class FormSanPham extends AppCompatActivity {
                         Country c = (Country) xuatXu.getSelectedItem();
 
                         sp.setTensp(String.valueOf(tensp.getText()).trim());
-                        sp.setXuatXu(String.valueOf(c.getId()));
                         sp.setGia(Double.parseDouble(String.valueOf(gia.getText()).trim()));
+                        sp.setXuatXu(c.getId());
 
                         db.updateSanPham(sp);
                         Toast.makeText(view.getContext(), "Sửa thành công", Toast.LENGTH_SHORT).show();
@@ -98,6 +98,7 @@ public class FormSanPham extends AppCompatActivity {
                 }
             });
         } else {
+            // add san pham
             xoa.setVisibility(View.INVISIBLE);
             them.setText("Thêm");
             xuatXu.setSelection(0);
@@ -138,6 +139,6 @@ public class FormSanPham extends AppCompatActivity {
         String name = String.valueOf(tensp.getText()).trim();
         String price = String.valueOf(gia.getText()).trim();
 
-        return !name.isEmpty() && !xuatXu.isEnabled() && !price.isEmpty();
+        return !name.isEmpty() && countryAdapter.isEnabled(xuatXu.getSelectedItemPosition()) && !price.isEmpty();
     }
 }
