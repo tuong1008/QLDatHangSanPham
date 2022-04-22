@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,13 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
 import com.example.qldathangsanpham.model.SanPham;
+import com.example.qldathangsanpham.ui.product.spinner.Country;
+import com.example.qldathangsanpham.ui.product.spinner.CountryAdapter;
 
 import java.text.DecimalFormat;
 
 public class FormSanPham extends AppCompatActivity {
-    EditText tensp, xuatXu, gia;
+    EditText tensp, gia;
+    Spinner xuatXu;
     Button them, xoa;
+
     DatabaseHelper db;
+
+    CountryAdapter countryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,10 @@ public class FormSanPham extends AppCompatActivity {
         them = findViewById(R.id.btnInsert);
         xoa = findViewById(R.id.btnDelete);
 
+        countryAdapter = new CountryAdapter(this);
+        xuatXu.setAdapter(countryAdapter);
+        xuatXu.setSelection(0);
+
         // intent is to edit/delete
         if (getIntent().hasExtra("SAN_PHAM")) {
             them.setText("Sửa");
@@ -44,7 +55,7 @@ public class FormSanPham extends AppCompatActivity {
             SanPham sp = (SanPham) getIntent().getSerializableExtra("SAN_PHAM");
 
             tensp.setText(sp.getTensp());
-            xuatXu.setText(sp.getXuatXu());
+//            xuatXu.setText(sp.getXuatXu());
 
             DecimalFormat format = new DecimalFormat("0.#");
             gia.setText(format.format(sp.getGia()));
@@ -52,9 +63,17 @@ public class FormSanPham extends AppCompatActivity {
             them.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // check fields
+                    if (!checkFields()) {
+                        Toast.makeText(view.getContext(), "Hãy điền đủ thông tin", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     try {
+                        Country c = (Country) xuatXu.getSelectedItem();
+
                         sp.setTensp(String.valueOf(tensp.getText()).trim());
-                        sp.setXuatXu(String.valueOf(xuatXu.getText()).trim());
+                        sp.setXuatXu(String.valueOf(c.getId()));
                         sp.setGia(Double.parseDouble(String.valueOf(gia.getText()).trim()));
 
                         db.updateSanPham(sp);
@@ -85,11 +104,19 @@ public class FormSanPham extends AppCompatActivity {
             them.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // check fields
+                    if (!checkFields()) {
+                        Toast.makeText(view.getContext(), "Hãy điền đủ thông tin", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     SanPham sp = new SanPham();
 
                     try {
+                        Country c = (Country) xuatXu.getSelectedItem();
+
                         sp.setTensp(String.valueOf(tensp.getText()).trim());
-                        sp.setXuatXu(String.valueOf(xuatXu.getText()).trim());
+                        sp.setXuatXu(String.valueOf(c.getId()));
                         sp.setGia(Double.valueOf(String.valueOf(gia.getText()).trim()));
 
                         db.addSanPham(sp);
@@ -103,9 +130,13 @@ public class FormSanPham extends AppCompatActivity {
                     }
                 }
             });
-
         }
     }
 
+    private boolean checkFields() {
+        String name = String.valueOf(tensp.getText()).trim();
+        String price = String.valueOf(gia.getText()).trim();
 
+        return !name.isEmpty() && !xuatXu.isEnabled() && !price.isEmpty();
+    }
 }

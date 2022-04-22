@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QLDatHangSanPham">
         <activity
+            android:name=".ui.product.spinner.SanPhamCountryView"
+            android:exported="false" />
+        <activity
             android:name=".ui.product.MainSanPham"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
