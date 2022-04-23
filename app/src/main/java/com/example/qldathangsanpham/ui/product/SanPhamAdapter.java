@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import com.example.qldathangsanpham.ui.product.spinner.Country;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable {
     Context context;
@@ -29,7 +29,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable 
 
     private ItemFilter filter = new ItemFilter();
 
-    public SanPhamAdapter(@NonNull Context context, List <SanPham> objects) {
+    public SanPhamAdapter(@NonNull Context context, List<SanPham> objects) {
         super(context, 0);
         this.context = context;
 
@@ -63,7 +63,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable 
         TextView xuatXu = convertView.findViewById(R.id.xuatXu);
         TextView gia = convertView.findViewById(R.id.gia);
 
-        SanPham sp = objects.get(position);
+        SanPham sp = filteredObjects.get(position);
 
         tensp.setText(String.format("%s", sp.getTensp()));
         xuatXu.setText(String.format("Xuất xứ: %s", Country.getCountryById(sp.getXuatXu()).getName()));
@@ -91,16 +91,12 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             String search = constraint.toString().toLowerCase();
+
             FilterResults results = new FilterResults();
-
-            ArrayList <SanPham> nlist = new ArrayList<>();
-
-            Log.d("SanPhamFilter", "perform filter on \n" + objects);
+            ArrayList<SanPham> nlist = new ArrayList<>();
 
             for (SanPham s : objects) {
-                String target = s.getTensp().toLowerCase();
-
-                if (target.contains(search)) {
+                if (s.getTensp().toLowerCase().contains(search) || Country.getCountryById(s.getXuatXu()).getName().toLowerCase().contains(search)) {
                     nlist.add(s);
                 }
             }
@@ -118,8 +114,6 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable 
             filteredObjects.addAll((ArrayList<SanPham>) results.values);
 
             notifyDataSetChanged();
-
-            Log.d("SanPhamFilter", "Publish: \n" + filteredObjects.toString());
         }
 
     }

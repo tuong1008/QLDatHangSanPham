@@ -5,9 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -49,8 +47,6 @@ public class MainSanPham extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-//        Log.d(TAG, "San pham list size: " + sanPhamList.size());
         adapter.setList(sanPhamList);
     }
 
@@ -59,8 +55,6 @@ public class MainSanPham extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        MenuItem menuItem = findViewById(R.id.search);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setQueryHint("Nhập tên/xuất xứ sản phẩm");
@@ -80,7 +74,6 @@ public class MainSanPham extends AppCompatActivity {
                 return false;
             }
         });
-
         return true;
     }
 
@@ -101,8 +94,6 @@ public class MainSanPham extends AppCompatActivity {
     private void initComponents() {
         db = new DatabaseHelper(this);
         sanPhamList = db.getAllSanPham();
-
-        Log.d(TAG, sanPhamList.toString());
 
         list = findViewById(R.id.list);
         add = findViewById(R.id.btnInsert);
