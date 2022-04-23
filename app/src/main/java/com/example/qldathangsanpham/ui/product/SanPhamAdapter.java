@@ -1,7 +1,6 @@
 package com.example.qldathangsanpham.ui.product;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.qldathangsanpham.R;
-import com.example.qldathangsanpham.Utility;
+import com.example.qldathangsanpham.utillity.Utility;
 import com.example.qldathangsanpham.model.SanPham;
 import com.example.qldathangsanpham.ui.product.spinner.Country;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable {
     Context context;

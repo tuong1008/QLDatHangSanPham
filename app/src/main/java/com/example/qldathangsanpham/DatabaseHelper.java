@@ -223,6 +223,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             db.insertOrThrow(TB_SAN_PHAM, null, values);
             db.setTransactionSuccessful();
+
             return true;
         } catch (Exception e) {
             Log.d(TAG, "Error while trying to add san pham");
@@ -243,6 +244,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(CL_DON_GIA, sp.getGia());
 
             db.update(TB_SAN_PHAM, values, "_id = ?", new String[]{String.valueOf(sp.getMasp())});
+            db.setTransactionSuccessful();
+
             return true;
         } catch (Exception e) {
             Log.d(TAG, "Error while trying to update sanpham");

@@ -1,6 +1,8 @@
 package com.example.qldathangsanpham.ui.product;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -92,13 +94,34 @@ public class FormSanPham extends AppCompatActivity {
             xoa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (db.deleteSanPham(sp.getMasp())) {
-                        Toast.makeText(view.getContext(), "Xóa sản phẩm thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(view.getContext(), "Xóa sản phẩm thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                    setResult(RESULT_OK);
-                    finish();
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int option) {
+                            switch (option) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    // yes
+                                    if (db.deleteSanPham(sp.getMasp())) {
+                                        Toast.makeText(view.getContext(), "Xóa sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(view.getContext(), "Xóa sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                                    }
+                                    setResult(RESULT_OK);
+                                    finish();
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    // no
+                                    break;
+                            }
+                        }
+                    };
+
+                    // show confirm delete dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage("Xác nhận xóa?")
+                            .setPositiveButton("Có", dialogClickListener)
+                            .setNegativeButton("Không", dialogClickListener)
+                            .show();
                 }
             });
         } else {
