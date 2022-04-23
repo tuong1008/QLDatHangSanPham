@@ -63,7 +63,6 @@ public class FormSanPham extends AppCompatActivity {
             them.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // check fields
                     if (!checkFields()) {
                         Toast.makeText(view.getContext(), "Hãy điền đủ thông tin", Toast.LENGTH_SHORT).show();
                         return;
@@ -76,10 +75,13 @@ public class FormSanPham extends AppCompatActivity {
                         sp.setGia(Double.parseDouble(String.valueOf(gia.getText()).trim()));
                         sp.setXuatXu(c.getId());
 
-                        db.updateSanPham(sp);
-                        Toast.makeText(view.getContext(), "Sửa thành công", Toast.LENGTH_SHORT).show();
+                        if (db.updateSanPham(sp)) {
+                            Toast.makeText(view.getContext(), "Sửa sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(view.getContext(), "Sửa sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                        }
                     } catch (Exception e) {
-                        Toast.makeText(view.getContext(), "Sửa thất bại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Hãy điền lại thông tin", Toast.LENGTH_SHORT).show();
                     } finally {
                         setResult(RESULT_OK);
                         finish();
@@ -90,9 +92,11 @@ public class FormSanPham extends AppCompatActivity {
             xoa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    db.deleteSanPham(sp.getMasp());
-
-                    Toast.makeText(view.getContext(), "Xóa thành công", Toast.LENGTH_SHORT).show();
+                    if (db.deleteSanPham(sp.getMasp())) {
+                        Toast.makeText(view.getContext(), "Xóa sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(view.getContext(), "Xóa sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                    }
                     setResult(RESULT_OK);
                     finish();
                 }
@@ -106,7 +110,6 @@ public class FormSanPham extends AppCompatActivity {
             them.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // check fields
                     if (!checkFields()) {
                         Toast.makeText(view.getContext(), "Hãy điền đủ thông tin", Toast.LENGTH_SHORT).show();
                         return;
@@ -121,11 +124,13 @@ public class FormSanPham extends AppCompatActivity {
                         sp.setXuatXu(String.valueOf(c.getId()));
                         sp.setGia(Double.valueOf(String.valueOf(gia.getText()).trim()));
 
-                        db.addSanPham(sp);
-
-                        Toast.makeText(view.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        if (db.addSanPham(sp)) {
+                            Toast.makeText(view.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(view.getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        }
                     } catch (Exception e) {
-                        Toast.makeText(view.getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Hãy điền lại thông tin", Toast.LENGTH_SHORT).show();
                     } finally {
                         setResult(Activity.RESULT_OK);
                         finish();

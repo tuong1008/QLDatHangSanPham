@@ -132,6 +132,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id + 1;
     }
 
+    public List<KhachHang> getAllCustomers(SQLiteDatabase db) {
+        List<KhachHang> list = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_HO_SO_KHACH_HANG, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    KhachHang cus = new KhachHang();
+                    cus.set_id(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(CL_ID))));
+                    cus.setHoTen(cursor.getString(cursor.getColumnIndexOrThrow(CL_HO_TEN)));
+                    cus.setDiaChi(cursor.getString(cursor.getColumnIndexOrThrow(CL_DIA_CHI)));
+                    cus.setAvatar(cursor.getString(cursor.getColumnIndexOrThrow(CL_AVATAR)));
+                    cus.setSdt(cursor.getString(cursor.getColumnIndexOrThrow(CL_SDT)));
+
+                    list.add(cus);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to get list customers from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
+
     public static void insertCustomer(SQLiteDatabase db, String tenKH, String diaChi,
                                       String soDT, String avatarPath) {
         ContentValues customerValues = new ContentValues();
@@ -183,7 +211,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public void addSanPham(SanPham sp) {
+    public boolean addSanPham(SanPham sp) {
         SQLiteDatabase db = getWritableDatabase();
 
         db.beginTransaction();
@@ -195,78 +223,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             db.insertOrThrow(TB_SAN_PHAM, null, values);
             db.setTransactionSuccessful();
+            return true;
         } catch (Exception e) {
             Log.d(TAG, "Error while trying to add san pham");
+            return false;
         } finally {
             db.endTransaction();
         }
     }
 
-    public void updateSanPham(SanPham sp) {
+    public boolean updateSanPham(SanPham sp) {
         SQLiteDatabase db = getWritableDatabase();
 
-//        db.beginTransaction();
+        db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
             values.put(CL_TEN_SAN_PHAM, sp.getTensp());
             values.put(CL_XUAT_XU, sp.getXuatXu());
             values.put(CL_DON_GIA, sp.getGia());
 
-            int t = db.update(TB_SAN_PHAM, values, "_id=?", new String[]{String.valueOf(sp.getMasp())});
-
-            Log.d(TAG, "UPDATE: " + t);
-//            try {
-//                db.execSQL("UPDATE SANPHAM SET TENSANPHAM=?, xuatxu=?, dongia=?", new String[] {sp.getTensp(), sp.getXuatXu(), String.valueOf(sp.getGia())});
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-
+            db.update(TB_SAN_PHAM, values, "_id = ?", new String[]{String.valueOf(sp.getMasp())});
+            return true;
         } catch (Exception e) {
             Log.d(TAG, "Error while trying to update sanpham");
+            return false;
         } finally {
-//            db.endTransaction();
+            db.endTransaction();
         }
     }
 
-    public void deleteSanPham(long id) {
+    public boolean deleteSanPham(long id) {
         SQLiteDatabase db = getWritableDatabase();
 
         db.beginTransaction();
         try {
             db.delete(TB_SAN_PHAM, "_id=?", new String[]{String.valueOf(id)});
             db.setTransactionSuccessful();
+            return true;
         } catch (Exception e) {
             Log.d(TAG, "Error while trying to delete san pham");
+            return false;
         } finally {
             db.endTransaction();
         }
-    }
-
-    public List<KhachHang> getAllCustomers(SQLiteDatabase db) {
-        List<KhachHang> list = new ArrayList<>();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_HO_SO_KHACH_HANG, null);
-
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    KhachHang cus = new KhachHang();
-                    cus.set_id(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(CL_ID))));
-                    cus.setHoTen(cursor.getString(cursor.getColumnIndexOrThrow(CL_HO_TEN)));
-                    cus.setDiaChi(cursor.getString(cursor.getColumnIndexOrThrow(CL_DIA_CHI)));
-                    cus.setAvatar(cursor.getString(cursor.getColumnIndexOrThrow(CL_AVATAR)));
-                    cus.setSdt(cursor.getString(cursor.getColumnIndexOrThrow(CL_SDT)));
-
-                    list.add(cus);
-                } while (cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.d("QueryDB", "Error while trying to get list customers from database");
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        return list;
     }
 }
