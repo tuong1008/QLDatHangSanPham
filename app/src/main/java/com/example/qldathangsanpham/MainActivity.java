@@ -66,12 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+       /* getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        return super.onCreateOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);*/
+        return false;
     }
 
-    @Override
+  /* @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_create_order:
@@ -81,5 +82,5 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 }
