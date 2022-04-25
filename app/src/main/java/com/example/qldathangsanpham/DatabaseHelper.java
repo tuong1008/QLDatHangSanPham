@@ -12,6 +12,7 @@ import com.example.qldathangsanpham.model.SanPham;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // creating a constant variables for our database.
@@ -262,6 +263,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         } catch (Exception e) {
             Log.d("QueryDB", "Error while trying to get list customers from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
+
+    public TreeMap<String, Integer> getThongKeTenKH(SQLiteDatabase db) {
+        TreeMap<String, Integer> list = new TreeMap<String, Integer>();
+
+        Cursor cursor = db.rawQuery("SELECT substr(hoTen,1,1) as ChuCaiDau, count(*) as SoLuong FROM HoSoKhachHang\n" +
+                "GROUP by ChuCaiDau", null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    list.put(cursor.getString(cursor.getColumnIndexOrThrow("ChuCaiDau")),
+                            Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow("SoLuong"))));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d("QueryDB", "Error while trying to count name of customers from database");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();

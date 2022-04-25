@@ -1,13 +1,24 @@
 package com.example.qldathangsanpham.ui.customer;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.FragmentTransaction;
+import android.os.Build;
+import android.util.Log;
+import android.widget.FilterQueryProvider;
+import android.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,12 +26,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -31,9 +36,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.qldathangsanpham.DatabaseHelper;
-import com.example.qldathangsanpham.MainActivity;
 import com.example.qldathangsanpham.R;
 import com.example.qldathangsanpham.model.KhachHang;
+import com.example.qldathangsanpham.model.SanPham;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
@@ -47,24 +54,21 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 public class CustomerActivity extends AppCompatActivity {
 
     private SQLiteDatabase db;
     private Cursor customersCursor;
+    private CustomerAdapter customerAdapter;
+    SectionsPagerAdapter pagerAdapter;
+    ViewPager2 pager;
+    private SearchViewModel searchViewModel;
     public static  final String EXTRA_MAKH = "maKH";
-
-    int pageHeight = 1120;
-    int pagewidth = 792;
+    boolean runResume=false;
 
     // constant code for runtime permissions
     private static final int PERMISSION_REQUEST_CODE = 200;
-
-    public void onClickAdd(View view){
-        Intent intent = new Intent(this, CustomerFormActivity.class);
-        intent.putExtra(EXTRA_MAKH, -1);
-        startActivity(intent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,70 +78,60 @@ public class CustomerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        setCustomersListView();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Cursor newCursor = db.query("HoSoKhachHang", new String[]{"_id", "hoTen"},
-                null, null, null, null, null);
+        pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), getLifecycle());
+        pager = findViewById(R.id.pager);
+        pager.setAdapter(pagerAdapter);
 
-        ListView listFavorites = findViewById(R.id.list);
-        CursorAdapter adapter = (CursorAdapter) listFavorites.getAdapter();
-        adapter.changeCursor(newCursor);
-        customersCursor = newCursor;
-    }
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        new TabLayoutMediator(tabLayout, pager,
+                (tab, position) -> tab.setText("OBJECT " + (position + 1))
+        ).attach();
 
-
-    private void setCustomersListView(){
-        ListView listCustomers = findViewById(R.id.list);
-        try{
-            SQLiteOpenHelper angDoDatabaseHelper = new DatabaseHelper(this);
-            db = angDoDatabaseHelper.getReadableDatabase();
-            customersCursor = db.query("HoSoKhachHang", new String[]{"_id", "hoTen"},
-                    null, null, null, null, null);
-            CursorAdapter customerAdapter =
-                    new SimpleCursorAdapter(CustomerActivity.this, android.R.layout.simple_list_item_1, customersCursor, new String[]{"hoTen"}, new int[]{android.R.id.text1},0);
-            listCustomers.setAdapter(customerAdapter);
-
-//            String tableName = "KhachHang";
-//            Log.d("LogCursor", "getTableAsString called");
-//            String tableString = String.format("Table %s:\n", tableName);
-//            Cursor allRows  = customersCursor;
-//            if (allRows.moveToFirst() ){
-//                String[] columnNames = allRows.getColumnNames();
-//                do {
-//                    for (String name: columnNames) {
-//                        tableString += String.format("%s: %s\n", name,
-//                                allRows.getString(allRows.getColumnIndex(name)));
-//                    }
-//                    tableString += "\n";
-//
-//                } while (allRows.moveToNext());
-//                Log.d("LogCursor", tableString);
-//            }
-        }
-        catch (SQLiteException e){
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
-            e.printStackTrace();
-        }
-        listCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(CustomerActivity.this, CustomerFormActivity.class);
-                intent.putExtra(EXTRA_MAKH, (int) id);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_customer, menu);
+        MenuItem searchViewItem = menu.findItem(R.id.app_bar_search);
+        final SearchView searchView = (SearchView) searchViewItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                CustomerFragment.customerAdapter.getFilter().filter(newText);
+                pagerAdapter.notifyDataSetChanged();
+                Toast.makeText(CustomerActivity.this, "text in search changed", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (runResume){
+            Log.d("-----customerActivity", "resume");
+            DatabaseHelper angDoDatabaseHelper = new DatabaseHelper(CustomerActivity.this);
+            db = angDoDatabaseHelper.getReadableDatabase();
+            CustomerFragment.setCustomersList(angDoDatabaseHelper.getAllCustomers(db));
+
+            CustomerFragment.customerAdapter.setItems(CustomerFragment.customersList);
+            pagerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        runResume=true;
     }
 
     @Override
