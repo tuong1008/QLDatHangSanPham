@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ScrollViewCount">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lb_khach_hang"
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/khach_hang"
+                app:layout_constraintBottom_toTopOf="@+id/lb_so_dien_thoai"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lb_so_dien_thoai"
+                style="@style/text_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lb_khach_hang"
+                android:layout_marginTop="@dimen/_20dp"
+                android:labelFor="@+id/actv_so_dien_thoai"
+                android:text="@string/so_dien_thoai"
+                app:layout_constraintBottom_toTopOf="@id/actv_so_dien_thoai"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lb_khach_hang" />
+
+            <AutoCompleteTextView
+                android:id="@+id/actv_so_dien_thoai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lb_so_dien_thoai"
+                android:autofillHints="phone"
+                android:inputType="phone"
+                app:layout_constraintBottom_toTopOf="@id/lb_ho_ten"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lb_so_dien_thoai" />
+
+            <TextView
+                android:id="@+id/lb_ho_ten"
+                style="@style/text_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/actv_so_dien_thoai"
+                android:labelFor="@+id/et_ho_ten"
+                android:text="@string/ho_ten"
+                app:layout_constraintBottom_toTopOf="@id/et_ho_ten"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/actv_so_dien_thoai" />
+
+            <EditText
+                android:id="@+id/et_ho_ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lb_ho_ten"
+                android:autofillHints="name"
+                android:inputType="text"
+                app:layout_constraintBottom_toTopOf="@id/lb_dia_chi"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lb_ho_ten" />
+
+            <TextView
+                android:id="@+id/lb_dia_chi"
+                style="@style/text_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_ho_ten"
+                android:labelFor="@+id/et_ho_ten"
+                android:text="@string/dia_chi"
+                app:layout_constraintBottom_toTopOf="@id/et_dia_chi"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_ho_ten" />
+
+            <EditText
+                android:id="@+id/et_dia_chi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lb_dia_chi"
+                android:inputType="text"
+                app:layout_constraintBottom_toTopOf="@id/lb_san_pham"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lb_dia_chi"
+                tools:ignore="Autofill" />
+
+            <TextView
+                android:id="@+id/lb_san_pham"
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_dia_chi"
+                android:layout_marginTop="@dimen/_20dp"
+                android:text="@string/danh_sach_san_pham"
+                app:layout_constraintBottom_toTopOf="@id/rv_products_in_order"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_dia_chi" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_products_in_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/lb_san_pham"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lb_san_pham" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add_product"
+                android:layout_width="@dimen/_56dp"
+                android:layout_height="@dimen/_56dp"
+                android:contentDescription="@string/fab_add"
+                android:src="@drawable/ic_plus_math"
+                app:layout_constraintBottom_toBottomOf="@id/rv_products_in_order"
+                app:layout_constraintEnd_toEndOf="@id/rv_products_in_order"
+                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintStart_toStartOf="@id/rv_products_in_order"
+                app:layout_constraintTop_toTopOf="@id/rv_products_in_order"
+                app:layout_constraintVertical_bias="0.9" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/luu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
