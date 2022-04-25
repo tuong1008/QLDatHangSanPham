@@ -16,7 +16,8 @@
         <activity
             android:name=".ui.order.OrderActivity"
             android:exported="false"
-            android:label="@string/don_dat_hang" />
+            android:label="@string/don_dat_hang"
+            android:theme="@style/Theme.QLDatHangSanPham" />
 
         <activity
             android:name=".ui.authentication.FullscreenActivity"
@@ -51,7 +52,6 @@
             android:name=".ui.product.FormSanPham"
             android:exported="false"
             android:label="Thông tin sản phẩm" />
-
 
         <activity
             android:name=".ui.customer.CustomerFormActivity"
