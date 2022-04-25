@@ -64,7 +64,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable 
         SanPham sp = filteredObjects.get(position);
 
         tensp.setText(String.format("%s", sp.getTensp()));
-        xuatXu.setText(String.format("Xuất xứ: %s", Country.getCountryById(sp.getXuatXu()).getName()));
+//        xuatXu.setText(String.format("Xuất xứ: %s", Country.getCountryById(sp.getXuatXu()).getName()));
         gia.setText(Utility.showGia(sp.getGia()));
 
         return convertView;

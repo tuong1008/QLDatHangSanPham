@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText editTextUserName = registerActivityBinding.editTextUsername;
         final ImageView imageView = registerActivityBinding.imageView;
         final Button selectImageButton = registerActivityBinding.selectImageButton;
-        final Button registerButton=registerActivityBinding.registerButton;
+        final Button registerButton = registerActivityBinding.registerButton;
 
         registerViewModel.getRegisterFromState().observe(this, new Observer<RegisterFromState>() {
             @Override
@@ -87,16 +87,15 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel.getRegisterResult().observe(this, new Observer<RegisterResult>() {
             @Override
             public void onChanged(RegisterResult registerResult) {
-                if(registerResult==null)
-                {
+                if (registerResult == null) {
                     return;
                 }
-                if(registerResult.getSuccess()!=null)
-                {
+                if (registerResult.getSuccess() != null) {
                     updateUiWithUser(registerResult);
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
-                if(registerResult.getError()!=null)
-                {
+                if (registerResult.getError() != null) {
                     showRegisterFailed(registerResult.getError());
                 }
             }
@@ -128,34 +127,32 @@ public class RegisterActivity extends AppCompatActivity {
         editTextFullName.addTextChangedListener(textWatcher);
         editTextPassword.addTextChangedListener(textWatcher);
 
-        ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if(result.getResultCode()== Activity.RESULT_OK)
-                        {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
                             //get data
-                            Intent intent=result.getData();
-                            final Uri uri=intent.getData();
+                            Intent intent = result.getData();
+                            final Uri uri = intent.getData();
                             try {
-                                final InputStream imageStream=getContentResolver().openInputStream(uri);
-                                final Bitmap bitmap= BitmapFactory.decodeStream(imageStream);
+                                final InputStream imageStream = getContentResolver().openInputStream(uri);
+                                final Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
                                 imageView.setImageBitmap(bitmap);
-                                ByteArrayOutputStream stream=new ByteArrayOutputStream();
-                                bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-                                byte[] byteArr=stream.toByteArray();
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                byte[] byteArr = stream.toByteArray();
                                 registerViewModel.registerDataChanged(editTextUserName.getText().toString(),
                                         editTextPassword.getText().toString(), byteArr, editTextFullName.getText().toString());
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
-                                Toast.makeText(RegisterActivity.this,"Something went wrong",Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
 
                             }
 
-                        }
-                        else {
-                            Toast.makeText(RegisterActivity.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "You haven't picked Image", Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -163,11 +160,11 @@ public class RegisterActivity extends AppCompatActivity {
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                String chooserTitle="Select Picture";
+                String chooserTitle = "Select Picture";
 
-                Intent intentChooser=Intent.createChooser(intent,chooserTitle);
+                Intent intentChooser = Intent.createChooser(intent, chooserTitle);
 
                 activityResultLauncher.launch(intentChooser);
             }
@@ -177,24 +174,23 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(registerViewModel.getRegisterFromState().getValue()!=null&&registerViewModel.getRegisterFromState().getValue().isDataValid())
-                {
-                Bitmap bitmap=((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                ByteArrayOutputStream stream=new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-                byte[] byteArr=stream.toByteArray();
-                registerViewModel.register(editTextUserName.getText().toString()
-                        ,editTextPassword.getText().toString(),
-                        byteArr,
-                        editTextFullName.getText().toString());
-                }
-                else{
+                if (registerViewModel.getRegisterFromState().getValue() != null && registerViewModel.getRegisterFromState().getValue().isDataValid()) {
+                    Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArr = stream.toByteArray();
+                    registerViewModel.register(editTextUserName.getText().toString()
+                            , editTextPassword.getText().toString(),
+                            byteArr,
+                            editTextFullName.getText().toString());
+                } else {
                     showRegisterFailed(R.string.register_failed);
                 }
             }
         });
 
     }
+
     private void updateUiWithUser(RegisterResult model) {
         String welcome = getString(R.string.welcome) + model.getSuccess().getEmail();
         // TODO : initiate successful logged in experience
