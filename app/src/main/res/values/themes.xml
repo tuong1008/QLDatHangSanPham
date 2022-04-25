@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.QLDatHangSanPham" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.QLDatHangSanPham" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -28,5 +28,33 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.QLDatHangSanPham.Fullscreen" parent="Theme.QLDatHangSanPham">
+        <item name="android:actionBarStyle">
+            @style/Widget.Theme.QLDatHangSanPham.ActionBar.Fullscreen
+        </item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.QLDatHangSanPham.FullscreenContainer" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="fullscreenBackgroundColor">@color/white</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorPrimary</item>
+        <item name="android:textColorTertiary">@color/textColorPrimary</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorAccent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
+    </style>
+
+    <style name="Theme.QLDatHangSanPham.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorAccent</item>
+        <item name="android:theme">@style/ThemeOverlay.QLDatHangSanPham.FullscreenContainer</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
 
 </resources>

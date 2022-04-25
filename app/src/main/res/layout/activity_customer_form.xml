@@ -12,6 +12,14 @@
         android:layout_width="190dp"
         android:layout_height="190dp" />
 
+    <Button
+        android:id="@+id/buttonLoadPicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onLoadPicture"
+        android:text="Tải ảnh lên" />
+
+
     <EditText
         android:id="@+id/maKH"
         android:layout_width="match_parent"
@@ -35,5 +43,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/so_dien_thoai" />
+
+
+    <Button
+        android:id="@+id/btnInsert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickInsertOrUpdate"
+        android:text="Thêm" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickDelete"
+        android:text="Xóa" />
 
 </LinearLayout>

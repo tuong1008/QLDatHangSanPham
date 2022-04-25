@@ -15,10 +15,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.util.Log;
+
+import com.example.qldathangsanpham.model.KhachHang;
+import com.example.qldathangsanpham.model.SanPham;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     // creating a constant variables for our database.
     // below variable is for our database name.
     public static final String DB_NAME = "QuanLyDatHang"; // the name of our database
+    public static final String TAG = DatabaseHelper.class.getName();
     public static final int DB_VERSION = 1; // the version of the database
     public static final String TB_HO_SO_NHAN_VIEN = "HoSoNhanVien";
     public static final String TB_TAI_KHOAN_NHAN_VIEN = "TaiKhoanNhanVien";
@@ -65,6 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + CL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + CL_HO_TEN + " TEXT NOT NULL, "
             + CL_SDT + " TEXT NOT NULL UNIQUE, "
+            + CL_AVATAR + " TEXT, "
             + CL_DIA_CHI + " TEXT);";
 
     //san pham
@@ -124,11 +134,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (int) db.insert(TB_HO_SO_NHAN_VIEN, null, values);
     }
 
-    public static int insertHoSoKhachHang(SQLiteDatabase db, String hoTen, String diaChi, String SoDienThoai) {
+    public static int insertHoSoKhachHang(SQLiteDatabase db, String hoTen, String diaChi, String SoDienThoai, String avatar) {
         ContentValues values = new ContentValues();
         values.put(CL_HO_TEN, hoTen);
         values.put(CL_DIA_CHI, diaChi);
         values.put(CL_SDT, SoDienThoai);
+        values.put(CL_AVATAR, avatar);
         return (int) db.insert(TB_HO_SO_KHACH_HANG, null, values);
     }
 
@@ -314,11 +325,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertTaiKhoanNhanVien(db, "ledinhtrieu@gmail.com", "ledinhtrieu");
         insertTaiKhoanNhanVien(db, "nguyentanthien@gmail.com", "nguyentanthien");
         insertTaiKhoanNhanVien(db, "nguyenthanhtu@gmail.com", "nguyenthanhtu");
-        insertHoSoKhachHang(db, "Nguyễn Lê Tấn Tài", "Thủ Đức, TPHCM", "0987654321");
-        insertHoSoKhachHang(db, "Lê Trọng Đạt", "Thủ Đức, TPHCM", "8970777444");
-        insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345");
-        insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586");
-        insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769");
+//        insertHoSoKhachHang(db, "Nguyễn Lê Tấn Tài", "Thủ Đức, TPHCM", "0987654321");
+//        insertHoSoKhachHang(db, "Lê Trọng Đạt", "Thủ Đức, TPHCM", "8970777444");
+//        insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345");
+//        insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586");
+//        insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769");
         insertSanPham(db, "TV Samsung 55 inch", 20000000, "Hàn Quốc");
         insertSanPham(db, "Tủ Lạnh Panasonic 2 Ngăn", 10000000, "Nhật Bản");
         insertSanPham(db, "TV Sony 40 inch", 15000000, "Nhật Bản");
@@ -347,7 +358,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
             db.execSQL(QUERY_CREATE_TB_TAI_KHOAN_NHAN_VIEN);
             db.execSQL(QUERY_CREATE_TB_HO_SO_KHACH_HANG);
@@ -355,8 +366,159 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TB_SAN_PHAM);
             db.execSQL(QUERY_CREATE_TB_DON_DAT_HANG);
             db.execSQL(QUERY_CREATE_TB_CT_DON_DAT_HANG);
-            insertData(db);
+//            insertData(db);
         }
+    }
 
+    public static int nextAutoIncrement(SQLiteDatabase db, String table) {
+        String query = "SELECT MAX(_id) AS max_id FROM " + table;
+        Cursor cursor = db.rawQuery(query, null);
+
+        int id = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+        return id + 1;
+    }
+
+    public List<KhachHang> getAllCustomers(SQLiteDatabase db) {
+        List<KhachHang> list = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_HO_SO_KHACH_HANG, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    KhachHang cus = new KhachHang();
+                    cus.set_id(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(CL_ID))));
+                    cus.setHoTen(cursor.getString(cursor.getColumnIndexOrThrow(CL_HO_TEN)));
+                    cus.setDiaChi(cursor.getString(cursor.getColumnIndexOrThrow(CL_DIA_CHI)));
+                    cus.setAvatar(cursor.getString(cursor.getColumnIndexOrThrow(CL_AVATAR)));
+                    cus.setSdt(cursor.getString(cursor.getColumnIndexOrThrow(CL_SDT)));
+
+                    list.add(cus);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to get list customers from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
+
+    public static void insertCustomer(SQLiteDatabase db, String tenKH, String diaChi,
+                                      String soDT, String avatarPath) {
+        ContentValues customerValues = new ContentValues();
+        customerValues.put(CL_HO_TEN, tenKH);
+        customerValues.put(CL_DIA_CHI, diaChi);
+        customerValues.put(CL_SDT, soDT);
+        customerValues.put(CL_AVATAR, avatarPath);
+        db.insert(TB_HO_SO_KHACH_HANG, null, customerValues);
+    }
+
+    public static void updateCustomer(SQLiteDatabase db, String tenKH, String diaChi,
+                                      String soDT, String maKH) {
+        ContentValues customerValues = new ContentValues();
+        customerValues.put(CL_HO_TEN, tenKH);
+        customerValues.put(CL_DIA_CHI, diaChi);
+        customerValues.put(CL_SDT, soDT);
+        db.update(TB_HO_SO_KHACH_HANG, customerValues, "_id = ?", new String[]{maKH});
+    }
+
+    public static void deleteCustomer(SQLiteDatabase db, String maKH) {
+        db.delete(TB_HO_SO_KHACH_HANG, "_id = ?", new String[]{maKH});
+    }
+
+    public List<SanPham> getAllSanPham() {
+        List<SanPham> list = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_SAN_PHAM, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    SanPham sp = new SanPham();
+                    sp.setMasp((int) Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(CL_ID))));
+                    sp.setTensp(cursor.getString(cursor.getColumnIndexOrThrow(CL_TEN_SAN_PHAM)));
+                    sp.setGia(Double.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(CL_DON_GIA))));
+                    sp.setXuatXu(cursor.getString(cursor.getColumnIndexOrThrow(CL_XUAT_XU)));
+
+                    list.add(sp);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to get list sanpham");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
+
+    public boolean addSanPham(SanPham sp) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(CL_TEN_SAN_PHAM, sp.getTensp());
+            values.put(CL_XUAT_XU, sp.getXuatXu());
+            values.put(CL_DON_GIA, sp.getGia());
+
+            db.insertOrThrow(TB_SAN_PHAM, null, values);
+            db.setTransactionSuccessful();
+
+            return true;
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to add san pham");
+            return false;
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public boolean updateSanPham(SanPham sp) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(CL_TEN_SAN_PHAM, sp.getTensp());
+            values.put(CL_XUAT_XU, sp.getXuatXu());
+            values.put(CL_DON_GIA, sp.getGia());
+
+            db.update(TB_SAN_PHAM, values, "_id = ?", new String[]{String.valueOf(sp.getMasp())});
+            db.setTransactionSuccessful();
+
+            return true;
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to update sanpham");
+            return false;
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public boolean deleteSanPham(long id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            db.delete(TB_SAN_PHAM, "_id=?", new String[]{String.valueOf(id)});
+            db.setTransactionSuccessful();
+            return true;
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to delete san pham");
+            return false;
+        } finally {
+            db.endTransaction();
+        }
     }
 }

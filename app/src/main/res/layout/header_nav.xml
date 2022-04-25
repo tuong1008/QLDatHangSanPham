@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="?attr/colorAccent"
+    >
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="QLVT"
+        android:textAlignment="center"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom|start"
+        android:orientation="horizontal"
+        android:layout_marginStart="5dp"
+
+        >
+
+        <ImageView
+            android:id="@+id/imageView_nav"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            tools:srcCompat="@tools:sample/avatars"
+            android:background="@drawable/round_outline"
+            android:clipToOutline="true"
+
+            />
+
+        <TextView
+            android:id="@+id/textViewHoTen_nav"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minh To"
+            android:layout_marginStart="4dp"
+
+            />
+
+    </LinearLayout>
+
+
+</FrameLayout>

@@ -1,16 +1,23 @@
 package com.example.qldathangsanpham.model;
 
-public class SanPham {
+import java.io.Serializable;
+
+public class SanPham implements Serializable {
     private int masp;
     private String tensp;
     private String xuatXu;
     private Double gia;
+    private String img;
 
-    public SanPham(int masp, String tensp, String xuatXu, Double gia) {
-        this.masp = masp;
-        this.tensp = tensp;
-        this.xuatXu = xuatXu;
-        this.gia = gia;
+    public SanPham() {
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public int getMasp() {
@@ -43,5 +50,15 @@ public class SanPham {
 
     public void setGia(Double gia) {
         this.gia = gia;
+    }
+
+    @Override
+    public String toString() {
+        return "SanPham{" +
+                "masp=" + masp +
+                ", tensp='" + tensp + '\'' +
+                ", xuatXu='" + xuatXu + '\'' +
+                ", gia=" + gia +
+                '}';
     }
 }
