@@ -7,21 +7,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.example.qldathangsanpham.model.KhachHang;
+import com.example.qldathangsanpham.model.SanPham;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import android.util.Log;
-
-import com.example.qldathangsanpham.model.KhachHang;
-import com.example.qldathangsanpham.model.SanPham;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TreeMap;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // creating a constant variables for our database.
@@ -383,33 +380,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id + 1;
     }
 
-    public List<KhachHang> getAllCustomers(SQLiteDatabase db) {
-        List<KhachHang> list = new ArrayList<>();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_HO_SO_KHACH_HANG, null);
-
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    KhachHang cus = new KhachHang();
-                    cus.set_id(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(CL_ID))));
-                    cus.setHoTen(cursor.getString(cursor.getColumnIndexOrThrow(CL_HO_TEN)));
-                    cus.setDiaChi(cursor.getString(cursor.getColumnIndexOrThrow(CL_DIA_CHI)));
-                    cus.setAvatar(cursor.getString(cursor.getColumnIndexOrThrow(CL_AVATAR)));
-                    cus.setSdt(cursor.getString(cursor.getColumnIndexOrThrow(CL_SDT)));
-
-                    list.add(cus);
-                } while (cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "Error while trying to get list customers from database");
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        return list;
-    }
 
     public static void insertCustomer(SQLiteDatabase db, String tenKH, String diaChi,
                                       String soDT, String avatarPath) {
@@ -521,4 +491,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
     }
+
+    public List<KhachHang> getAllCustomers(SQLiteDatabase db) {
+        List<KhachHang> list = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TB_HO_SO_KHACH_HANG, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    KhachHang cus = new KhachHang();
+                    cus.set_id(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(CL_ID))));
+                    cus.setHoTen(cursor.getString(cursor.getColumnIndexOrThrow(CL_HO_TEN)));
+                    cus.setDiaChi(cursor.getString(cursor.getColumnIndexOrThrow(CL_DIA_CHI)));
+                    cus.setAvatar(cursor.getString(cursor.getColumnIndexOrThrow(CL_AVATAR)));
+                    cus.setSdt(cursor.getString(cursor.getColumnIndexOrThrow(CL_SDT)));
+
+                    list.add(cus);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d("QueryDB", "Error while trying to get list customers from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
+
+    public TreeMap<String, Integer> getThongKeTenKH(SQLiteDatabase db) {
+        TreeMap<String, Integer> list = new TreeMap<String, Integer>();
+
+        Cursor cursor = db.rawQuery("SELECT substr(hoTen,1,1) as ChuCaiDau, count(*) as SoLuong FROM HoSoKhachHang\n" +
+                "GROUP by ChuCaiDau", null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    list.put(cursor.getString(cursor.getColumnIndexOrThrow("ChuCaiDau")),
+                            Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow("SoLuong"))));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d("QueryDB", "Error while trying to count name of customers from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
 }
+

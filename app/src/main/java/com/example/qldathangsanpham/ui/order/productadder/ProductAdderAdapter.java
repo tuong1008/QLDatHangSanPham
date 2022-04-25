@@ -1,7 +1,5 @@
 package com.example.qldathangsanpham.ui.order.productadder;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,20 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
-import com.example.qldathangsanpham.Utility;
-import com.example.qldathangsanpham.ui.order.ordereditor.OrderEditorFragmentArgs;
-import com.example.qldathangsanpham.ui.order.ordereditor.OrderEditorFragmentDirections;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;

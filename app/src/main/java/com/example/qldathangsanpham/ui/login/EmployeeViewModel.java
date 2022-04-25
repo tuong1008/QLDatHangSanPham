@@ -1,6 +1,5 @@
 package com.example.qldathangsanpham.ui.login;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.qldathangsanpham.data.EmployeeRepository;
@@ -14,11 +13,11 @@ public class EmployeeViewModel extends ViewModel {
     public EmployeeViewModel(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
-    public  EmployeeModel findByTaiKhoanID(int id)
-    {
-        EmployeeModel employeeModel=employeeRepository.findbyTaiKhoanID(id);
 
-    return employeeModel;
+    public EmployeeModel findByTaiKhoanID(int id) {
+        EmployeeModel employeeModel = employeeRepository.findbyTaiKhoanID(id);
+
+        return employeeModel;
     }
 
 }

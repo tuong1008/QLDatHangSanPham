@@ -2,9 +2,6 @@ package com.example.qldathangsanpham.data;
 
 import com.example.qldathangsanpham.data.model.EmployeeModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EmployeeRepository {
 
     private EmployeeDataSoure employeeDatasoure;
@@ -14,23 +11,18 @@ public class EmployeeRepository {
         this.employeeDatasoure = employeeDatasoure;
     }
 
-    public static  EmployeeRepository  getInstance(EmployeeDataSoure employeeDatasoure)
-    {
-        if(employeeRepository==null)
-        {
-            return new EmployeeRepository (employeeDatasoure);
-        }
-        else
-        {
+    public static EmployeeRepository getInstance(EmployeeDataSoure employeeDatasoure) {
+        if (employeeRepository == null) {
+            return new EmployeeRepository(employeeDatasoure);
+        } else {
             return employeeRepository;
         }
     }
 
     EmployeeModel employeeModelListt;
 
-    public EmployeeModel findbyTaiKhoanID(int id)
-    {
-       return employeeDatasoure.findbyTaiKhoanID(id);
+    public EmployeeModel findbyTaiKhoanID(int id) {
+        return employeeDatasoure.findbyTaiKhoanID(id);
     }
 
 

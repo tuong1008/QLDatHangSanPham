@@ -8,7 +8,7 @@ public class RegisterResult {
     @Nullable
     private RegisterUser success;
     @Nullable
-    private  Integer error;
+    private Integer error;
 
     public RegisterResult(@Nullable RegisterUser success) {
         this.success = success;

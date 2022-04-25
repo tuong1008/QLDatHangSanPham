@@ -20,7 +20,6 @@ public class EmployeeModel {
     }
 
 
-
     public String getHoVaTen() {
         return hoVaTen;
     }

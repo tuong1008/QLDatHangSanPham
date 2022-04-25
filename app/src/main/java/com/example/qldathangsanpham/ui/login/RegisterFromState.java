@@ -11,14 +11,14 @@ public class RegisterFromState {
     private Integer hovatenError;
 
     @Nullable
-    private  Integer avatarError;
+    private Integer avatarError;
 
     public RegisterFromState(@Nullable Integer usernameError, @Nullable Integer passwordError, @Nullable Integer hovatenError, @Nullable Integer avatarError) {
         this.usernameError = usernameError;
         this.passwordError = passwordError;
         this.hovatenError = hovatenError;
         this.avatarError = avatarError;
-        this.isDataValid=false;
+        this.isDataValid = false;
     }
 
     public RegisterFromState(boolean isDataValid) {
@@ -53,7 +53,7 @@ public class RegisterFromState {
         return isDataValid;
     }
 
-    private boolean isDataValid=false;
+    private boolean isDataValid = false;
 
 
 }

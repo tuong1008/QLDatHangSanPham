@@ -1,32 +1,32 @@
 package com.example.qldathangsanpham.ui.customer;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.cursoradapter.widget.CursorAdapter;
-import androidx.cursoradapter.widget.SimpleCursorAdapter;
-
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Bundle;
-import android.os.Environment;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
 import com.example.qldathangsanpham.model.KhachHang;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
@@ -34,29 +34,23 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
+
 public class CustomerActivity extends AppCompatActivity {
 
     private SQLiteDatabase db;
     private Cursor customersCursor;
-    public static  final String EXTRA_MAKH = "maKH";
-
-    int pageHeight = 1120;
-    int pagewidth = 792;
+    private CustomerAdapter customerAdapter;
+    SectionsPagerAdapter pagerAdapter;
+    ViewPager2 pager;
+    private SearchViewModel searchViewModel;
+    public static final String EXTRA_MAKH = "maKH";
+    boolean runResume = false;
 
     // constant code for runtime permissions
     private static final int PERMISSION_REQUEST_CODE = 200;
-
-    public void onClickAdd(View view){
-        Intent intent = new Intent(this, CustomerFormActivity.class);
-        intent.putExtra(EXTRA_MAKH, -1);
-        startActivity(intent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,75 +60,65 @@ public class CustomerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        setCustomersListView();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Cursor newCursor = db.query("HoSoKhachHang", new String[]{"_id", "hoTen"},
-                null, null, null, null, null);
+        pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), getLifecycle());
+        pager = findViewById(R.id.pager);
+        pager.setAdapter(pagerAdapter);
 
-        ListView listFavorites = findViewById(R.id.list);
-        CursorAdapter adapter = (CursorAdapter) listFavorites.getAdapter();
-        adapter.changeCursor(newCursor);
-        customersCursor = newCursor;
-    }
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        new TabLayoutMediator(tabLayout, pager,
+                (tab, position) -> tab.setText("OBJECT " + (position + 1))
+        ).attach();
 
-
-    private void setCustomersListView(){
-        ListView listCustomers = findViewById(R.id.list);
-        try{
-            SQLiteOpenHelper angDoDatabaseHelper = new DatabaseHelper(this);
-            db = angDoDatabaseHelper.getReadableDatabase();
-            customersCursor = db.query("HoSoKhachHang", new String[]{"_id", "hoTen"},
-                    null, null, null, null, null);
-            CursorAdapter customerAdapter =
-                    new SimpleCursorAdapter(CustomerActivity.this, android.R.layout.simple_list_item_1, customersCursor, new String[]{"hoTen"}, new int[]{android.R.id.text1},0);
-            listCustomers.setAdapter(customerAdapter);
-
-//            String tableName = "KhachHang";
-//            Log.d("LogCursor", "getTableAsString called");
-//            String tableString = String.format("Table %s:\n", tableName);
-//            Cursor allRows  = customersCursor;
-//            if (allRows.moveToFirst() ){
-//                String[] columnNames = allRows.getColumnNames();
-//                do {
-//                    for (String name: columnNames) {
-//                        tableString += String.format("%s: %s\n", name,
-//                                allRows.getString(allRows.getColumnIndex(name)));
-//                    }
-//                    tableString += "\n";
-//
-//                } while (allRows.moveToNext());
-//                Log.d("LogCursor", tableString);
-//            }
-        }
-        catch (SQLiteException e){
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
-            e.printStackTrace();
-        }
-        listCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(CustomerActivity.this, CustomerFormActivity.class);
-                intent.putExtra(EXTRA_MAKH, (int) id);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_customer, menu);
+        MenuItem searchViewItem = menu.findItem(R.id.app_bar_search);
+        final SearchView searchView = (SearchView) searchViewItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                CustomerFragment.customerAdapter.getFilter().filter(newText);
+                pagerAdapter.notifyDataSetChanged();
+                Toast.makeText(CustomerActivity.this, "text in search changed", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (runResume) {
+            Log.d("-----customerActivity", "resume");
+            DatabaseHelper angDoDatabaseHelper = new DatabaseHelper(CustomerActivity.this);
+            db = angDoDatabaseHelper.getReadableDatabase();
+            CustomerFragment.setCustomersList(angDoDatabaseHelper.getAllCustomers(db));
+
+            CustomerFragment.customerAdapter.setItems(CustomerFragment.customersList);
+            pagerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        runResume = true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.export_pdf:
                 if (checkPermission()) {
                     Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
@@ -151,7 +135,7 @@ public class CustomerActivity extends AppCompatActivity {
 
     private void generatePDF() {
         Document document = new Document();
-        try{
+        try {
             File file = new File(Environment.getExternalStorageDirectory(), "GFG.pdf");
             PdfWriter.getInstance(document,
                     new FileOutputStream(file));
@@ -176,7 +160,7 @@ public class CustomerActivity extends AppCompatActivity {
             db = angDoDatabaseHelper.getReadableDatabase();
             List<KhachHang> allCustomers = angDoDatabaseHelper.getAllCustomers(db);
 
-            for (KhachHang i : allCustomers){
+            for (KhachHang i : allCustomers) {
                 Image image = Image.getInstance(i.getAvatar());
                 image.scaleAbsolute(70f, 70f);
                 PdfPCell cell1x = new PdfPCell(new Phrase(String.valueOf(i.get_id())));
@@ -194,8 +178,7 @@ public class CustomerActivity extends AppCompatActivity {
 
             document.close();
             Toast.makeText(this, "Create PDF successfully", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

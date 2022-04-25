@@ -12,13 +12,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
-import com.example.qldathangsanpham.ui.order.productadder.ProductAdderFragmentDirections;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
@@ -134,6 +132,7 @@ public class ProductInOrderAdapter extends RecyclerView.Adapter<ProductInOrderVi
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         DatabaseHelper.deteleCtDonDatHang(db, orderId, productId);
     }
+
     public void filterList(List<Map<String, String>> filterllist) {
         items = filterllist;
         notifyDataSetChanged();

@@ -12,7 +12,7 @@ public class ChangePasswordFromState {
     public ChangePasswordFromState(Integer passwordError, Integer newPasswordError) {
         this.passwordError = passwordError;
         this.newPasswordError = newPasswordError;
-        isDataValid=false;
+        isDataValid = false;
     }
 
     public ChangePasswordFromState(boolean isDataValid) {
@@ -20,10 +20,12 @@ public class ChangePasswordFromState {
         this.passwordError = null;
         this.newPasswordError = null;
     }
+
     @Nullable
     public Integer getPasswordError() {
         return passwordError;
     }
+
     @Nullable
     public Integer getNewPasswordError() {
         return newPasswordError;

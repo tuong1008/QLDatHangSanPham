@@ -2,9 +2,9 @@ package com.example.qldathangsanpham.ui.login;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.annotation.NonNull;
 
 import com.example.qldathangsanpham.data.LoginDataSource;
 import com.example.qldathangsanpham.data.LoginRepository;
@@ -15,11 +15,12 @@ import com.example.qldathangsanpham.data.LoginRepository;
  */
 
 /* Abstract Factory design pattern
-* ViewModelProvider được sử dụng để tạo ra ViewModel thông qua phương  thức của Factory Method
-* */
+ * ViewModelProvider được sử dụng để tạo ra ViewModel thông qua phương  thức của Factory Method
+ * */
 public class LoginViewModelFactory implements ViewModelProvider.Factory {
 
     private Context context;
+
     public LoginViewModelFactory(Context context) {
         this.context = context;
     }

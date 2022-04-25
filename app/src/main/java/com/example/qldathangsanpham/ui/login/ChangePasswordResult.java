@@ -2,8 +2,8 @@ package com.example.qldathangsanpham.ui.login;
 
 public class ChangePasswordResult {
 
-    private  String sussess;
-    private  Integer error;
+    private String sussess;
+    private Integer error;
 
     public ChangePasswordResult(String sussess) {
         this.sussess = sussess;

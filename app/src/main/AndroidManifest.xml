@@ -36,8 +36,7 @@
         </activity>
         <activity
             android:name=".ui.login.RegisterActivity"
-            android:exported="false"
-            android:theme="@style/ThemeOverlay.QLDatHangSanPham.FullscreenContainer" />
+            android:exported="false" />
         <activity
             android:name=".ui.product.spinner.SanPhamCountryView"
             android:exported="false" />

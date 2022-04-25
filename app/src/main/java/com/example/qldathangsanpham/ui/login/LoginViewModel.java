@@ -1,16 +1,16 @@
 package com.example.qldathangsanpham.ui.login;
 
+import android.content.Context;
+import android.util.Patterns;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import android.content.Context;
-import android.util.Patterns;
-
+import com.example.qldathangsanpham.R;
 import com.example.qldathangsanpham.data.LoginRepository;
 import com.example.qldathangsanpham.data.Result;
 import com.example.qldathangsanpham.data.model.LoggedInUser;
-import com.example.qldathangsanpham.R;
 
 public class LoginViewModel extends ViewModel {
 
@@ -18,8 +18,8 @@ public class LoginViewModel extends ViewModel {
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;
-    private MutableLiveData<ChangePasswordFromState> changePasswordFromState=new MutableLiveData<>();
-    private  MutableLiveData<ChangePasswordResult> changePasswordResult=new MutableLiveData<>();
+    private MutableLiveData<ChangePasswordFromState> changePasswordFromState = new MutableLiveData<>();
+    private MutableLiveData<ChangePasswordResult> changePasswordResult = new MutableLiveData<>();
 
     LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
@@ -38,20 +38,20 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public  LiveData<ChangePasswordFromState> getChangePasswordFromState(){
-        return  changePasswordFromState;
+    public LiveData<ChangePasswordFromState> getChangePasswordFromState() {
+        return changePasswordFromState;
     }
-    public LiveData<ChangePasswordResult> getChangePasswordResult(){
+
+    public LiveData<ChangePasswordResult> getChangePasswordResult() {
         return changePasswordResult;
     }
 
-    public boolean isLogged()
-    {
-            return loginRepository.isLoggedIn();
+    public boolean isLogged() {
+        return loginRepository.isLoggedIn();
 
     }
-    public void logout()
-    {
+
+    public void logout() {
 
         loginRepository.logout();
     }
@@ -61,17 +61,17 @@ public class LoginViewModel extends ViewModel {
         Result<LoggedInUser> result = loginRepository.login(username, password);
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView( data.getDisplayName(),data.getUserId())));
+            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName(), data.getUserId())));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
     }
-    public void changePassword(String username,String password,String newPassword){
-        Boolean isChanged=loginRepository.changePassword(username,password,newPassword);
-        if(isChanged==true) {
+
+    public void changePassword(String username, String password, String newPassword) {
+        Boolean isChanged = loginRepository.changePassword(username, password, newPassword);
+        if (isChanged == true) {
             changePasswordResult.setValue(new ChangePasswordResult("Password changed"));
-        }
-        else{
+        } else {
             changePasswordResult.setValue(new ChangePasswordResult(R.string.change_password_failed));
         }
 
@@ -86,17 +86,17 @@ public class LoginViewModel extends ViewModel {
             loginFormState.setValue(new LoginFormState(true));
         }
     }
-    public void changePasswordDataChanged(String password,String newPassword){
+
+    public void changePasswordDataChanged(String password, String newPassword) {
         if (!isPasswordValid(password)) {
-            changePasswordFromState.setValue(new ChangePasswordFromState( R.string.invalid_password,null));
-        }
-        else if (!isPasswordValid(newPassword)) {
-            changePasswordFromState.setValue(new ChangePasswordFromState(null,R.string.invalid_password));
-        }
-        else {
+            changePasswordFromState.setValue(new ChangePasswordFromState(R.string.invalid_password, null));
+        } else if (!isPasswordValid(newPassword)) {
+            changePasswordFromState.setValue(new ChangePasswordFromState(null, R.string.invalid_password));
+        } else {
             changePasswordFromState.setValue(new ChangePasswordFromState(true));
         }
     }
+
     // A placeholder username validation check
     private boolean isUserNameValid(String username) {
         if (username == null) {

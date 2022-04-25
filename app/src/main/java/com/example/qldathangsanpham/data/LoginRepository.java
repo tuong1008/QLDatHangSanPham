@@ -1,7 +1,6 @@
 package com.example.qldathangsanpham.data;
 
 import com.example.qldathangsanpham.data.model.LoggedInUser;
-import com.example.qldathangsanpham.ui.login.SaveSharedPreference;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -57,9 +56,9 @@ public class LoginRepository {
         }
         return result;
     }
-    public boolean changePassword(String username,String password,String newPassword)
-    {
-            return dataSource.changePassword(username,password,newPassword);
+
+    public boolean changePassword(String username, String password, String newPassword) {
+        return dataSource.changePassword(username, password, newPassword);
 
     }
 }

@@ -1,16 +1,7 @@
 package com.example.qldathangsanpham.ui.authentication;
 
-import androidx.annotation.StringRes;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,8 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.qldathangsanpham.databinding.SecurityFragmentBinding;
 import com.example.qldathangsanpham.ui.login.ChangePasswordFromState;
@@ -40,29 +37,27 @@ public class SecurityFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding=SecurityFragmentBinding.inflate(inflater,container,false);
-        View view=binding.getRoot();
-        loginViewModel=new ViewModelProvider(this, new LoginViewModelFactory(getContext())).get(LoginViewModel.class);
-        final EditText editTextUserName=binding.editTextUsernameSecurity;
-        final EditText editTextPassword=binding.editTextPasswordSecurity;
-        final EditText editTextPasswordNew=binding.editTextPasswordNewSecurity;
-        final Button buttonChangePassword= binding.buttonChangePassword;
-        Bundle bundle=getArguments();
-        String userName=bundle.getString("username");
+        binding = SecurityFragmentBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory(getContext())).get(LoginViewModel.class);
+        final EditText editTextUserName = binding.editTextUsernameSecurity;
+        final EditText editTextPassword = binding.editTextPasswordSecurity;
+        final EditText editTextPasswordNew = binding.editTextPasswordNewSecurity;
+        final Button buttonChangePassword = binding.buttonChangePassword;
+        Bundle bundle = getArguments();
+        String userName = bundle.getString("username");
         editTextUserName.setText(userName);
 
         loginViewModel.getChangePasswordFromState().observe(getActivity(), new Observer<ChangePasswordFromState>() {
             @Override
             public void onChanged(ChangePasswordFromState changePasswordFromState) {
-                if(changePasswordFromState==null)
-                {
+                if (changePasswordFromState == null) {
                     return;
                 }
-                if(changePasswordFromState.getPasswordError()!=null)
-                {
+                if (changePasswordFromState.getPasswordError() != null) {
                     editTextPassword.setError(getString(changePasswordFromState.getPasswordError()));
                 }
-                 if(changePasswordFromState.getNewPasswordError()!=null){
+                if (changePasswordFromState.getNewPasswordError() != null) {
                     editTextPasswordNew.setError(getString(changePasswordFromState.getNewPasswordError()));
                 }
             }
@@ -70,18 +65,18 @@ public class SecurityFragment extends Fragment {
         loginViewModel.getChangePasswordResult().observe(getActivity(), new Observer<ChangePasswordResult>() {
             @Override
             public void onChanged(ChangePasswordResult changePasswordResult) {
-                if(changePasswordResult==null){
+                if (changePasswordResult == null) {
                     return;
                 }
-                if(changePasswordResult.getError()!=null){
+                if (changePasswordResult.getError() != null) {
                     showLoginFailed(changePasswordResult.getError());
                 }
-                if(changePasswordResult.getSussess()!=null){
-                   updateUI(changePasswordResult.getSussess());
-                   SaveSharedPreference.logout(getActivity());
-                   loginViewModel.logout();
-                   Intent intent=new Intent(getActivity(), LoginActivity.class);
-                   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                if (changePasswordResult.getSussess() != null) {
+                    updateUI(changePasswordResult.getSussess());
+                    SaveSharedPreference.logout(getActivity());
+                    loginViewModel.logout();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                     startActivity(intent);
                     getActivity().finish();
@@ -89,7 +84,7 @@ public class SecurityFragment extends Fragment {
                 }
             }
         });
-        TextWatcher textWatcher=new TextWatcher() {
+        TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -103,7 +98,7 @@ public class SecurityFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 loginViewModel.changePasswordDataChanged(editTextPassword.getText().toString()
-                ,editTextPasswordNew.getText().toString()
+                        , editTextPasswordNew.getText().toString()
                 );
             }
         };
@@ -114,7 +109,7 @@ public class SecurityFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 loginViewModel.changePassword(editTextUserName.getText().toString(),
-                        editTextPassword.getText().toString(),editTextPasswordNew.getText().toString());
+                        editTextPassword.getText().toString(), editTextPasswordNew.getText().toString());
             }
         });
         return view;
@@ -124,14 +119,15 @@ public class SecurityFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-     //   loginViewModel=new ViewModelProvider(getActivity(), new LoginViewModelFactory(getContext())).get(LoginViewModel.class)
+        //   loginViewModel=new ViewModelProvider(getActivity(), new LoginViewModelFactory(getContext())).get(LoginViewModel.class)
         // TODO: Use the ViewModel
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getContext(), errorString, Toast.LENGTH_SHORT).show();
     }
-    private void updateUI(String string){
+
+    private void updateUI(String string) {
         Toast.makeText(getContext(), string, Toast.LENGTH_SHORT).show();
     }
 

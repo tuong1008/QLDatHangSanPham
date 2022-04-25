@@ -1,6 +1,5 @@
 package com.example.qldathangsanpham.data;
 
-import com.example.qldathangsanpham.data.model.LoggedInUser;
 import com.example.qldathangsanpham.data.model.RegisterUser;
 
 /**
@@ -45,9 +44,9 @@ public class RegisterRepository {
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public Result<RegisterUser> register(String username, String password,byte [] avatar,String hovaten) {
+    public Result<RegisterUser> register(String username, String password, byte[] avatar, String hovaten) {
         // handle login
-        Result<RegisterUser> result = dataSource.register(username,password,avatar,hovaten);
+        Result<RegisterUser> result = dataSource.register(username, password, avatar, hovaten);
         if (result instanceof Result.Success) {
             setRegisterUser(((Result.Success<RegisterUser>) result).getData());
         }
