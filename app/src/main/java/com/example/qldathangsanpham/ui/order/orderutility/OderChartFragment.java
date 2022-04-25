@@ -12,10 +12,10 @@ import com.example.qldathangsanpham.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link OderChart#newInstance} factory method to
+ * Use the {@link OderChartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OderChart extends Fragment {
+public class OderChartFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class OderChart extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OderChart() {
+    public OderChartFragment() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class OderChart extends Fragment {
      * @return A new instance of fragment OderChart.
      */
     // TODO: Rename and change types and number of parameters
-    public static OderChart newInstance(String param1, String param2) {
-        OderChart fragment = new OderChart();
+    public static OderChartFragment newInstance(String param1, String param2) {
+        OderChartFragment fragment = new OderChartFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

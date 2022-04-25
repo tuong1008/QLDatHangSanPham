@@ -4,31 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.customer.CustomerFormActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.customer.CustomerFormActivity">
+
     <ImageView
+        android:id="@+id/avatar"
         android:layout_width="190dp"
-        android:layout_height="190dp"
-        android:id="@+id/avatar"/>
+        android:layout_height="190dp" />
+
     <EditText
+        android:id="@+id/maKH"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/maKH"
-        android:id="@+id/maKH"/>
+        android:hint="@string/ma_khach_hang" />
+
     <EditText
+        android:id="@+id/tenKH"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/tenKH"
-        android:id="@+id/tenKH"/>
+        android:hint="@string/ten_khach_hang" />
+
     <EditText
+        android:id="@+id/diaChi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/diaChi"
-        android:id="@+id/diaChi"/>
+        android:hint="@string/dia_chi" />
+
     <EditText
+        android:id="@+id/soDT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/soDT"
-        android:id="@+id/soDT"/>
+        android:hint="@string/so_dien_thoai" />
 
 </LinearLayout>

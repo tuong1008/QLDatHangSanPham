@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_20dp">
+
+    <ImageSwitcher
+
+        android:id="@+id/iv_thumbnail_product"
+        android:layout_width="@dimen/_46dp"
+        android:layout_height="@dimen/_46dp"
+        android:background="@drawable/ic_order"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_item_product_adder_ten_san_pham"
+        style="@style/text_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10dp"
+        android:text="@string/id"
+        app:layout_constraintStart_toEndOf="@+id/iv_thumbnail_product"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_marginStart="@dimen/_5dp"
+        android:id="@+id/tv_id_ddh"
+        style="@style/text_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_123123123"
+        app:layout_constraintStart_toEndOf="@+id/tv_item_product_adder_ten_san_pham"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_item_order_ten_khach_hang"
+        style="@style/text_body"
+        android:layout_width="@dimen/_200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/nguyen_thanh_tu"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_product_adder_ten_san_pham"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_product_adder_ten_san_pham" />
+
+    <TextView
+        android:id="@+id/tv_ngay_dat_hang"
+        style="@style/text_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"
+        app:layout_constraintBottom_toTopOf="@id/tv_thoi_gian_dat_hang"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_thumbnail_product" />
+
+    <TextView
+        android:id="@+id/tv_thoi_gian_dat_hang"
+        style="@style/text_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_thumbnail_product"
+        app:layout_constraintEnd_toEndOf="@+id/tv_ngay_dat_hang"
+        app:layout_constraintTop_toBottomOf="@id/tv_ngay_dat_hang" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

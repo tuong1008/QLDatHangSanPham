@@ -1,4 +1,4 @@
-package com.example.qldathangsanpham.ui.order;
+package com.example.qldathangsanpham.ui.order.ordereditor;
 
 import android.view.View;
 import android.widget.TextView;

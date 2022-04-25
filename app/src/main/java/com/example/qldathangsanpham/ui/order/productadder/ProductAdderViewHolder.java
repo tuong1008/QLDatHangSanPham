@@ -1,4 +1,4 @@
-package com.example.qldathangsanpham.ui.order.productpicker;
+package com.example.qldathangsanpham.ui.order.productadder;
 
 import android.view.View;
 import android.widget.TextView;

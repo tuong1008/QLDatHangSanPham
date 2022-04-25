@@ -14,18 +14,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageSwitcher
-        android:id="@+id/iv_add_to_order"
-        android:layout_width="@dimen/_24dp"
-        android:layout_height="@dimen/_24dp"
-        android:background="@drawable/ic_add"
-        android:contentDescription="@string/thumbnail_product"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_thumbnail_product"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_thumbnail_product" />
-
     <TextView
-        android:id="@+id/tv_item_product_adder_ten_san_pham"
+        android:id="@+id/tv_item_product_order_ten_san_pham"
         style="@style/text_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,13 +26,45 @@
 
 
     <TextView
-        android:id="@+id/tv_item_adder_don_gia"
+        android:id="@+id/tv_item_product_order_don_gia"
         style="@style/text_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5dp"
         android:text="@string/_10_000_000"
-        app:layout_constraintStart_toStartOf="@+id/tv_item_product_adder_ten_san_pham"
-        app:layout_constraintTop_toBottomOf="@id/tv_item_product_adder_ten_san_pham" />
+        app:layout_constraintBottom_toBottomOf="@+id/lb_sdt"
+        app:layout_constraintStart_toEndOf="@+id/lb_sdt"
+        app:layout_constraintTop_toTopOf="@+id/lb_sdt" />
+
+    <TextView
+        android:id="@+id/lb_so_luong"
+        style="@style/text_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/so_luong"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_product_order_ten_san_pham"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_product_order_don_gia" />
+
+
+    <TextView
+        android:id="@+id/lb_sdt"
+        style="@style/text_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/don_gia"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_product_order_ten_san_pham"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_product_order_ten_san_pham" />
+
+    <TextView
+        android:id="@+id/tv_product_oder_so_luong"
+        style="@style/text_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5dp"
+        android:text="@string/_123123123"
+        app:layout_constraintBottom_toBottomOf="@+id/lb_so_luong"
+        app:layout_constraintStart_toEndOf="@+id/lb_so_luong"
+        app:layout_constraintTop_toTopOf="@+id/lb_so_luong" />
 
     <TextView
         android:id="@+id/lb_unit"
@@ -51,8 +73,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5dp"
         android:text="@string/vnd"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_item_adder_don_gia"
-        app:layout_constraintStart_toEndOf="@+id/tv_item_adder_don_gia"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_adder_don_gia" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_product_order_don_gia"
+        app:layout_constraintStart_toEndOf="@+id/tv_item_product_order_don_gia"
+        app:layout_constraintTop_toTopOf="@+id/tv_item_product_order_don_gia" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

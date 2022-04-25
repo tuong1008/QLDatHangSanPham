@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="@+id/iv_thumbnail_product" />
 
     <TextView
-        android:id="@+id/tv_item_ten_san_pham"
+        android:id="@+id/tv_item_product_adder_ten_san_pham"
         style="@style/text_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,13 +36,13 @@
 
 
     <TextView
-        android:id="@+id/tv_item_don_gia"
+        android:id="@+id/tv_item_product_adder_don_gia"
         style="@style/text_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_10_000_000"
-        app:layout_constraintStart_toStartOf="@+id/tv_item_ten_san_pham"
-        app:layout_constraintTop_toBottomOf="@id/tv_item_ten_san_pham" />
+        app:layout_constraintStart_toStartOf="@+id/tv_item_product_adder_ten_san_pham"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_product_adder_ten_san_pham" />
 
     <TextView
         android:id="@+id/lb_unit"
@@ -51,8 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5dp"
         android:text="@string/vnd"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_item_don_gia"
-        app:layout_constraintStart_toEndOf="@+id/tv_item_don_gia"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_don_gia" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_product_adder_don_gia"
+        app:layout_constraintStart_toEndOf="@+id/tv_item_product_adder_don_gia"
+        app:layout_constraintTop_toTopOf="@+id/tv_item_product_adder_don_gia" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

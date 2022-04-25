@@ -4,79 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.order.ProductInOrderFragment">
+    tools:context=".ui.order.productadder.ProductAdderFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_products_in_order"
+        android:id="@+id/rv_product_adder"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_20dp"
-        app:behavior_hideable="true"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        <ImageView
-            android:id="@+id/iv_thumbnail_product"
-            android:layout_width="@dimen/_46dp"
-            android:layout_height="@dimen/_46dp"
-            android:background="@drawable/ic_product"
-            android:contentDescription="@string/thumbnail_product"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_ten_san_pham"
-            style="@style/text_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10dp"
-            android:text="@string/tv_samsung_4K"
-            app:layout_constraintStart_toEndOf="@+id/iv_thumbnail_product"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/tv_don_gia"
-            style="@style/text_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/_10_000_000"
-            app:layout_constraintStart_toStartOf="@+id/tv_ten_san_pham"
-            app:layout_constraintTop_toBottomOf="@id/tv_ten_san_pham" />
-
-        <TextView
-            android:id="@+id/lb_unit"
-            style="@style/text_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5dp"
-            android:text="@string/vnd"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_don_gia"
-            app:layout_constraintStart_toEndOf="@+id/tv_don_gia"
-            app:layout_constraintTop_toTopOf="@+id/tv_don_gia" />
-
-        <NumberPicker
-            android:id="@+id/np_so_luong_dat"
-            android:layout_width="@dimen/_56dp"
-            android:layout_height="@dimen/_56dp"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_thumbnail_product"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_thumbnail_product" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_add_product"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20dp"
-            android:text="@string/them_vao_don_hang"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/np_so_luong_dat" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

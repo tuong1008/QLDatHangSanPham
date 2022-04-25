@@ -1,22 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/fragment_order_home">
+
     <fragment
         android:id="@+id/fragment_order_home"
-        android:name="com.example.qldathangsanpham.ui.order.OrderHomeFragment"
-        android:label="@string/fragment_order_home">
+        android:name="com.example.qldathangsanpham.ui.order.oderhome.OrderHomeFragment"
+        android:label="@string/fragment_order_home"
+        tools:layout="@layout/fragment_order_home">
         <action
-            android:id="@+id/action_fragment_order_home_to_fragment_order_editor"
-            app:destination="@id/blankFragment2" />
+            android:id="@+id/action_pick_customer"
+            app:destination="@id/fragment_customer_picker" />
+        <action
+            android:id="@+id/action_edit_order"
+            app:destination="@id/fragment_order_editor">
+            <argument
+                android:name="order_id"
+                app:argType="integer"
+                app:nullable="false" />
+            <argument
+                android:name="customer_id"
+                app:argType="integer"
+                app:nullable="false" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_customer_picker"
+        android:name="com.example.qldathangsanpham.ui.order.customerpicker.CustomerPickerFragment"
+        android:label="@string/fragment_customer_picker"
+        tools:layout="@layout/fragment_customer_picker">
+        <argument
+            android:name="order_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/action_create_to_order"
+            app:destination="@id/fragment_order_editor"
+            app:popUpTo="@id/fragment_customer_picker"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="customer_id"
+                app:argType="integer"
+                app:nullable="false" />
+        </action>
+        <action
+            android:id="@+id/action_change_customer"
+            app:destination="@id/fragment_order_editor"
+            app:popUpTo="@id/fragment_order_editor"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="order_id"
+                app:argType="integer"
+                app:nullable="false" />
+            <argument
+                android:name="customer_id"
+                app:argType="integer"
+                app:nullable="false" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/fragment_order_editor"
-        android:name="com.example.qldathangsanpham.ui.order.OrderEditorFragment"
-        android:label="@string/fragment_order_editor">
-
+        android:name="com.example.qldathangsanpham.ui.order.ordereditor.OrderEditorFragment"
+        android:label="@string/fragment_order_editor"
+        tools:layout="@layout/fragment_order_editor">
+        <argument
+            android:name="order_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="customer_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_add_product_to_order"
+            app:destination="@id/fragement_product_adder">
+            <argument
+                android:name="order_id"
+                app:argType="integer"
+                app:nullable="false" />
+            <argument
+                android:name="customer_id"
+                app:argType="integer"
+                app:nullable="false" />
+        </action>
+        <action
+            android:id="@+id/action_change_customer"
+            app:destination="@id/fragment_customer_picker">
+            <argument
+                android:name="order_id"
+                app:argType="integer"
+                app:nullable="false" />
+        </action>
+        <action
+            android:id="@+id/action_update_so_luong"
+            app:destination="@id/fragment_order_editor"
+            app:popUpTo="@id/fragment_order_editor"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="order_id"
+                app:argType="integer"
+                app:nullable="false" />
+            <argument
+                android:name="customer_id"
+                app:argType="integer"
+                app:nullable="false" />
+        </action>
     </fragment>
 
+    <fragment
+        android:id="@+id/fragement_product_adder"
+        android:name="com.example.qldathangsanpham.ui.order.productadder.ProductAdderFragment"
+        android:label="@string/fragment_product_adder"
+        tools:layout="@layout/fragment_product_adder">
+        <argument
+            android:name="order_id"
+            app:argType="integer"
+            app:nullable="false" />
+        <argument
+            android:name="customer_id"
+            app:argType="integer"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_back_to_order"
+            app:destination="@id/fragment_order_editor"
+            app:popUpTo="@id/fragment_order_editor"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="customer_id"
+                app:argType="integer"
+                app:nullable="false" />
+            <argument
+                android:name="order_id"
+                app:argType="integer"
+                app:nullable="false" />
+        </action>
+    </fragment>
 
 </navigation>

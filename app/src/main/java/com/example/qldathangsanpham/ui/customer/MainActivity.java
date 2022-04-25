@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,14 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView l;
     String menu[]
-            = { "Quản lý Đơn đặt hàng", "Quản lý Thông tin khách hàng",
+            = {"Quản lý Đơn đặt hàng", "Quản lý Thông tin khách hàng",
             "Quản lý Sản phẩm"};
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 1:
                         Intent intent = new Intent(MainActivity.this, CustomerActivity.class);
                         startActivity(intent);
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_create_order:
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
