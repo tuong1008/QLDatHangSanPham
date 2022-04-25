@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.qldathangsanpham.DatabaseHelper;
+import com.example.qldathangsanpham.Utility;
 import com.example.qldathangsanpham.data.model.RegisterUser;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class RegisterDataSource {
             // TODO: handle loggedInUser authentication
             ContentValues taiKhoanValue = new ContentValues();
             taiKhoanValue.put("username", username);
-            taiKhoanValue.put("password", password);
+            taiKhoanValue.put("password", Utility.encryptPassword(password));
             mDatabase.insert(DatabaseHelper.TB_TAI_KHOAN_NHAN_VIEN, null, taiKhoanValue);
             int id;
             Cursor cursor = mDatabase.query(DatabaseHelper.TB_TAI_KHOAN_NHAN_VIEN, null, DatabaseHelper.CL_USERNAME + "=?", new String[]{username}, null, null, null);

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.qldathangsanpham.DatabaseHelper;
+import com.example.qldathangsanpham.Utility;
 import com.example.qldathangsanpham.data.model.LoggedInUser;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class LoginDataSource {
                 String id = cursor.getString(0);
                 String userName = cursor.getString(1);
                 String passWord = cursor.getString(2);
-                if (userName.equals(username) && passWord.equals(password)) {
+                if (userName.equals(username) && Utility.checkPassword(password, passWord)) {
                     LoggedInUser loggedInUser = new LoggedInUser(id, userName);
                     return new Result.Success<>(loggedInUser);
                 } else {

@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         String userName = SaveSharedPreference.getUserName(LoginActivity.this);
         Integer id = SaveSharedPreference.getId(LoginActivity.this);
         if (!userName.equals("") && id != -1) {
-            Intent intent = new Intent(LoginActivity.this, FullscreenActivity.class);
+            Intent intent = new Intent(LoginActivity.this, OrderActivity.class);
             intent.putExtra("username", userName);
             intent.putExtra("id", id);
             finish();

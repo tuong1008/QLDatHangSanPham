@@ -322,11 +322,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertTaiKhoanNhanVien(db, "ledinhtrieu@gmail.com", "ledinhtrieu");
         insertTaiKhoanNhanVien(db, "nguyentanthien@gmail.com", "nguyentanthien");
         insertTaiKhoanNhanVien(db, "nguyenthanhtu@gmail.com", "nguyenthanhtu");
-//        insertHoSoKhachHang(db, "Nguyễn Lê Tấn Tài", "Thủ Đức, TPHCM", "0987654321");
-//        insertHoSoKhachHang(db, "Lê Trọng Đạt", "Thủ Đức, TPHCM", "8970777444");
-//        insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345");
-//        insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586");
-//        insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769");
+        insertHoSoKhachHang(db, "Nguyễn Lê Tấn Tài", "Thủ Đức, TPHCM", "0987654321", "1");
+        insertHoSoKhachHang(db, "Lê Trọng Đạt", "Thủ Đức, TPHCM", "8970777444", "1");
+        insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345", "1");
+        insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586", "1");
+        insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769", "1");
         insertSanPham(db, "TV Samsung 55 inch", 20000000, "Hàn Quốc");
         insertSanPham(db, "Tủ Lạnh Panasonic 2 Ngăn", 10000000, "Nhật Bản");
         insertSanPham(db, "TV Sony 40 inch", 15000000, "Nhật Bản");
@@ -363,7 +363,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TB_SAN_PHAM);
             db.execSQL(QUERY_CREATE_TB_DON_DAT_HANG);
             db.execSQL(QUERY_CREATE_TB_CT_DON_DAT_HANG);
-//            insertData(db);
+            insertData(db);
         }
     }
 
