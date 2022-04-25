@@ -15,12 +15,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -31,7 +25,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.qldathangsanpham.DatabaseHelper;
-import com.example.qldathangsanpham.MainActivity;
 import com.example.qldathangsanpham.R;
 import com.example.qldathangsanpham.model.KhachHang;
 import com.itextpdf.text.Document;
@@ -46,7 +39,6 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 public class CustomerActivity extends AppCompatActivity {
 
