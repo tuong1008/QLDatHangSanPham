@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/lb_khach_hang"
+        style="@style/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/_20dp"
+        android:text="@string/khach_hang" />
+
+    <include
+        android:id="@+id/layout_khach_hang"
+        layout="@layout/item_customer_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lb_khach_hang" />
+
+    <ImageView
+        android:layout_width="@dimen/_24dp"
+        android:layout_height="@dimen/_24dp"
+        android:layout_alignTop="@id/layout_khach_hang"
+        android:layout_alignEnd="@id/layout_khach_hang"
+        android:layout_alignBottom="@id/layout_khach_hang"
+        android:layout_marginEnd="@dimen/_20dp"
+        android:src="@drawable/ic_forward" />
+
+    <TextView
+        android:id="@+id/lb_danh_sach_san_pham"
+        style="@style/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_khach_hang"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/_20dp"
+        android:text="@string/danh_sach_san_pham" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_products_in_order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200dp"
+        android:layout_below="@id/lb_danh_sach_san_pham"
+        android:layout_alignParentBottom="true"
+        android:minHeight="@dimen/_200dp"
+        android:paddingBottom="@dimen/_80dp" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_product"
+        android:layout_width="@dimen/_56dp"
+        android:layout_height="@dimen/_56dp"
+        android:layout_alignTop="@+id/rv_products_in_order"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginEnd="@dimen/_20dp"
+        android:contentDescription="@string/fab_add"
+        android:src="@drawable/ic_plus_math" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/lb_thanh_tien"-->
+    <!--        style="@style/text_label"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/thanht_tien"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/bt_save"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_thanh_tien"-->
+    <!--        style="@style/text_label"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/_10_000_000"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/lb_thanh_tien"-->
+    <!--        app:layout_constraintEnd_toStartOf="@id/lb_unit"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/lb_thanh_tien"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/lb_thanh_tien" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/lb_unit"-->
+    <!--        style="@style/text_label"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/vnd"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/tv_thanh_tien"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/tv_thanh_tien"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/tv_thanh_tien" />-->
+
+    <!--    <androidx.appcompat.widget.AppCompatButton-->
+    <!--        android:id="@+id/bt_save"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:text="@string/luu" />-->
+
+</RelativeLayout>

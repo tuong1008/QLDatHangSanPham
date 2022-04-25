@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public class SearchViewModel {
-    private MutableLiveData<String> query= new MutableLiveData<String>();
+    private MutableLiveData<String> query = new MutableLiveData<String>();
 
-    public void setQuery(String queryData)
-    {
+    public void setQuery(String queryData) {
         query.setValue(queryData);
     }
 

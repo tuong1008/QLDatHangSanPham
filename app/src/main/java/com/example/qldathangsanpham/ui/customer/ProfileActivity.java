@@ -1,8 +1,8 @@
 package com.example.qldathangsanpham.ui.customer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.qldathangsanpham.R;
 

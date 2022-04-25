@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">QLDatHangSanPham</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile">Thông tin cá nhân</string>
     <string name="customer_label">Quản lý thông tin khách hàng</string>
@@ -8,11 +7,71 @@
     <string name="export_pdf">Xuất file PDF</string>
     <string name="insert_label">Thêm</string>
 
+    <string name="ma_khach_hang">Mã khách hàng</string>
+    <string name="ten_khach_hang">Tên khách hàng</string>
+    <string name="ic_back">ic_back</string>
+    <string name="ic_user">ic_user</string>
+    <string name="ic_add">ic_add</string>
+    <string name="don_dat_hang">Đơn Đặt Hàng</string>
+    <string name="khach_hang">Khách hàng</string>
+    <string name="ho_ten">Họ tên</string>
+    <string name="so_dien_thoai">Số điện thoại:</string>
+    <string name="dia_chi">Địa chỉ:</string>
+    <string name="ten_san_pham">Tên sản phẩm</string>
+    <string name="don_gia">Đơn giá:</string>
+    <string name="xuat_xu">Xuất xứ</string>
+    <string name="so_luong">Số lượng:</string>
+    <string name="luu">Lưu</string>
+    <string name="them_khach_hang">Khách Hàng</string>
+    <string name="ho_so">Hồ sơ</string>
+    <string name="tim_kiem">Tìm kiếm</string>
+    <string name="san_pham">Sản phẩm</string>
+    <string name="b">B</string>
+    <string name="nguyen_thanh_tu">Nguyễn Thanh Tú</string>
+    <string name="id">ID:</string>
+    <string name="_123123123">123123123</string>
+    <string name="time">08:00 AM</string>
+    <string name="date">08/04/2022</string>
+    <string name="fab_add">fab_add</string>
+    <string name="danh_sach_san_pham">Danh sách sản phẩm</string>
+    <string name="fragment_order_home">Đơn Đặt Hàng</string>
+    <string name="fragment_order_editor">Đơn Đặt Hàng</string>
+    <string name="tv_samsung_4K">TV Samsung 4K</string>
+    <string name="_10_000_000">10.000.000</string>
+    <string name="vnd">VND</string>
+    <string name="them_vao_don_hang">Thêm vào Đơn hàng</string>
+    <string name="thumbnail_product">thumbnail product</string>
+    <string name="thanht_tien">Thành tiền:</string>
+    <string name="fragment_product_adder">Thêm Sản Phẩm</string>
+    <string name="_0920912342">0929123454</string>
+    <string name="thu_duc_tp_hcm">Thủ Đức, TP.HCM</string>
+    <string name="fragment_customer_picker">Khách hàng</string>
+
     <string name="maKH">Mã khách hàng</string>
     <string name="tenKH">Tên khách hàng</string>
     <string name="diaChi">Địa chỉ</string>
     <string name="soDT">Số điện thoại</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >8 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="register_failed">"Register failed"</string>
+    <string name="change_password_failed">"Change password failed"</string>
+    <string name="invalid_fullname">"Not a valid fullname"</string>
+    <string name="title_activity_fullscreen">"FullscreenActivity"</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="notification">Notification</string>
+
     <string name="tenSP">Tên sản phẩm</string>
     <string name="xuatXu">Xuất xứ</string>
     <string name="gia">Giá</string>
+
 </resources>

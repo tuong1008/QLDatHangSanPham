@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_customer.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_customer_chart.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/register_fragment.xml" value="0.1125" />
         <entry key="app/src/main/res/menu/menu_customer.xml" value="0.1125" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.19375" />
         <entry key="app/src/main/res/menu/search_menu.xml" value="0.19375" />

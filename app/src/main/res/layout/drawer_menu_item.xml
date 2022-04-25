@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_baseline_login_24"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/item_text"
+        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="Đăng xuất"
+        android:textSize="15dp"
+        android:textColor="@color/textColorPrimary"/>
+
+</LinearLayout>

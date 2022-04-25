@@ -32,7 +32,8 @@
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="563dp"
-                android:nestedScrollingEnabled="true" />
+                android:nestedScrollingEnabled="true"
+                tools:listitem="@layout/activity_san_pham_view"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

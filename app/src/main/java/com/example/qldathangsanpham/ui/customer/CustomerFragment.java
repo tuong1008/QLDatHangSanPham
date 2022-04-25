@@ -2,33 +2,24 @@ package com.example.qldathangsanpham.ui.customer;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
-
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
@@ -42,7 +33,7 @@ public class CustomerFragment extends Fragment {
     public static CustomerAdapter customerAdapter;
     public static List<KhachHang> customersList;
     ListView lvCustomer;
-    public static  final String EXTRA_MAKH = "maKH";
+    public static final String EXTRA_MAKH = "maKH";
 
     public static void setCustomersList(List<KhachHang> customersList) {
         CustomerFragment.customersList.clear();
@@ -99,8 +90,8 @@ public class CustomerFragment extends Fragment {
         return view;
     }
 
-    private void setCustomersListView(){
-        try{
+    private void setCustomersListView() {
+        try {
             SQLiteOpenHelper angDoDatabaseHelper = new DatabaseHelper(getActivity());
             db = angDoDatabaseHelper.getReadableDatabase();
             customersList = ((DatabaseHelper) angDoDatabaseHelper).getAllCustomers(db);
@@ -132,8 +123,7 @@ public class CustomerFragment extends Fragment {
 //                } while (allRows.moveToNext());
 //                Log.d("LogCursor", tableString);
 //            }
-        }
-        catch (SQLiteException e){
+        } catch (SQLiteException e) {
             Toast toast = Toast.makeText(getActivity(), "Database unavailable", Toast.LENGTH_SHORT);
             toast.show();
             e.printStackTrace();

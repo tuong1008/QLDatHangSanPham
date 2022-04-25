@@ -1,44 +1,30 @@
 package com.example.qldathangsanpham.ui.customer;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-import android.app.FragmentTransaction;
-import android.os.Build;
-import android.util.Log;
-import android.widget.FilterQueryProvider;
-import android.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.cursoradapter.widget.CursorAdapter;
-import androidx.cursoradapter.widget.SimpleCursorAdapter;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
-import androidx.viewpager2.widget.ViewPager2;
-
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
 import com.example.qldathangsanpham.model.KhachHang;
-import com.example.qldathangsanpham.model.SanPham;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.itextpdf.text.Document;
@@ -48,14 +34,10 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
 public class CustomerActivity extends AppCompatActivity {
 
     private SQLiteDatabase db;
@@ -64,8 +46,8 @@ public class CustomerActivity extends AppCompatActivity {
     SectionsPagerAdapter pagerAdapter;
     ViewPager2 pager;
     private SearchViewModel searchViewModel;
-    public static  final String EXTRA_MAKH = "maKH";
-    boolean runResume=false;
+    public static final String EXTRA_MAKH = "maKH";
+    boolean runResume = false;
 
     // constant code for runtime permissions
     private static final int PERMISSION_REQUEST_CODE = 200;
@@ -117,7 +99,7 @@ public class CustomerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (runResume){
+        if (runResume) {
             Log.d("-----customerActivity", "resume");
             DatabaseHelper angDoDatabaseHelper = new DatabaseHelper(CustomerActivity.this);
             db = angDoDatabaseHelper.getReadableDatabase();
@@ -131,12 +113,12 @@ public class CustomerActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        runResume=true;
+        runResume = true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.export_pdf:
                 if (checkPermission()) {
                     Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
@@ -153,7 +135,7 @@ public class CustomerActivity extends AppCompatActivity {
 
     private void generatePDF() {
         Document document = new Document();
-        try{
+        try {
             File file = new File(Environment.getExternalStorageDirectory(), "GFG.pdf");
             PdfWriter.getInstance(document,
                     new FileOutputStream(file));
@@ -178,7 +160,7 @@ public class CustomerActivity extends AppCompatActivity {
             db = angDoDatabaseHelper.getReadableDatabase();
             List<KhachHang> allCustomers = angDoDatabaseHelper.getAllCustomers(db);
 
-            for (KhachHang i : allCustomers){
+            for (KhachHang i : allCustomers) {
                 Image image = Image.getInstance(i.getAvatar());
                 image.scaleAbsolute(70f, 70f);
                 PdfPCell cell1x = new PdfPCell(new Phrase(String.valueOf(i.get_id())));
@@ -196,8 +178,7 @@ public class CustomerActivity extends AppCompatActivity {
 
             document.close();
             Toast.makeText(this, "Create PDF successfully", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

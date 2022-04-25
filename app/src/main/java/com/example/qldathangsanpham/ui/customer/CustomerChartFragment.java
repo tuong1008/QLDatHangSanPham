@@ -1,18 +1,15 @@
 package com.example.qldathangsanpham.ui.customer;
 
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
@@ -24,12 +21,10 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.TreeMap;
 
 public class CustomerChartFragment extends Fragment {
@@ -77,7 +72,7 @@ public class CustomerChartFragment extends Fragment {
             alphabets.add(entry.getKey());
             float x = i;
             float y = entry.getValue();
-            values.add(new BarEntry(x,y));
+            values.add(new BarEntry(x, y));
             i++;
         }
 

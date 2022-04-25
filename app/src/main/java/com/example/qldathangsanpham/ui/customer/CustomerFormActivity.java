@@ -1,17 +1,7 @@
 package com.example.qldathangsanpham.ui.customer;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -34,19 +24,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class CustomerFormActivity extends AppCompatActivity {
     final int MyVersion = Build.VERSION.SDK_INT;
     String avatarPath;
     boolean isChangeAvatar = false;
 
-    public void onLoadPicture(View view){
+    public void onLoadPicture(View view) {
         //request permission to stored
         if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
             if (!checkIfAlreadyHavePermission()) {
@@ -76,7 +75,7 @@ public class CustomerFormActivity extends AppCompatActivity {
                         // There are no request codes
                         Intent data = result.getData();
                         Uri selectedImage = data.getData();
-                        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                         Cursor cursor = getContentResolver().query(selectedImage,
                                 filePathColumn, null, null, null);
@@ -95,7 +94,7 @@ public class CustomerFormActivity extends AppCompatActivity {
             });
 
 
-    public void onClickInsertOrUpdate(View view){
+    public void onClickInsertOrUpdate(View view) {
         SQLiteOpenHelper andDoDatabaseHelper =
                 new DatabaseHelper(CustomerFormActivity.this);
 
@@ -105,12 +104,12 @@ public class CustomerFormActivity extends AppCompatActivity {
         ImageView avatar = findViewById(R.id.avatar);
         Button btnAddOrUpdate = findViewById(R.id.btnInsert);
 
-        String strTenKH =  tenKH.getText().toString();
-        String strDiaChi =  diaChi.getText().toString();
-        String strSoDT =  soDT.getText().toString();
+        String strTenKH = tenKH.getText().toString();
+        String strDiaChi = diaChi.getText().toString();
+        String strSoDT = soDT.getText().toString();
         String strAddOrUpdate = btnAddOrUpdate.getText().toString();
 
-        if (strAddOrUpdate.equals("Thêm")){
+        if (strAddOrUpdate.equals("Thêm")) {
             SQLiteDatabase db = andDoDatabaseHelper.getWritableDatabase();
             int nextID = DatabaseHelper.nextAutoIncrement(db, "HoSoKhachHang");
 
@@ -123,7 +122,7 @@ public class CustomerFormActivity extends AppCompatActivity {
             // data/user/0/com.example.qldathangsanpham/app_avatarCus/
             File directory = cw.getDir("avatarCus", Context.MODE_PRIVATE);
             // Create .jpg
-            File myPath = new File(directory,nextID + ".jpg");
+            File myPath = new File(directory, nextID + ".jpg");
 
             FileOutputStream fos = null;
             try {
@@ -142,12 +141,12 @@ public class CustomerFormActivity extends AppCompatActivity {
             try {
                 DatabaseHelper.insertCustomer(db, strTenKH, strDiaChi, strSoDT, myPath.getAbsolutePath());
                 Toast.makeText(this, "Inserted", Toast.LENGTH_SHORT).show();
-            } catch(SQLiteException e) {
+            } catch (SQLiteException e) {
                 e.printStackTrace();
             }
         } else {
             //replace old image
-            if (isChangeAvatar){
+            if (isChangeAvatar) {
                 BitmapDrawable drawable = (BitmapDrawable) avatar.getDrawable();
                 Bitmap bitmap = drawable.getBitmap();
 
@@ -168,31 +167,31 @@ public class CustomerFormActivity extends AppCompatActivity {
             }
 
             EditText maKH = findViewById(R.id.maKH);
-            String strMaKH =  maKH.getText().toString();
+            String strMaKH = maKH.getText().toString();
 
             try {
                 SQLiteDatabase db = andDoDatabaseHelper.getWritableDatabase();
                 DatabaseHelper.updateCustomer(db, strTenKH, strDiaChi, strSoDT, strMaKH);
                 Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
-            } catch(SQLiteException e) {
+            } catch (SQLiteException e) {
                 e.printStackTrace();
             }
         }
 
     }
 
-    public void onClickDelete(View view){
+    public void onClickDelete(View view) {
         SQLiteOpenHelper andDoDatabaseHelper =
                 new DatabaseHelper(CustomerFormActivity.this);
 
         EditText maKH = findViewById(R.id.maKH);
-        String strMaKH =  maKH.getText().toString();
+        String strMaKH = maKH.getText().toString();
 
         try {
             SQLiteDatabase db = andDoDatabaseHelper.getWritableDatabase();
             DatabaseHelper.deleteCustomer(db, strMaKH);
             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
-        } catch(SQLiteException e) {
+        } catch (SQLiteException e) {
             e.printStackTrace();
         }
     }
@@ -204,7 +203,7 @@ public class CustomerFormActivity extends AppCompatActivity {
 
         int intMaKH = (Integer) getIntent().getExtras().get(CustomerActivity.EXTRA_MAKH);
 
-        if (intMaKH==-1){
+        if (intMaKH == -1) {
             //Insert mode
             EditText tvMaKH = findViewById(R.id.maKH);
             Button btnDelete = findViewById(R.id.btnDelete);
@@ -217,9 +216,9 @@ public class CustomerFormActivity extends AppCompatActivity {
             SQLiteOpenHelper angDoDatabaseHelper = new DatabaseHelper(this);
             try {
                 SQLiteDatabase db = angDoDatabaseHelper.getReadableDatabase();
-                Cursor cursor = db.query ("HoSoKhachHang", new String[] {"_id", "hoTen", "diaChi","sdt", "avatar"},
+                Cursor cursor = db.query("HoSoKhachHang", new String[]{"_id", "hoTen", "diaChi", "sdt", "avatar"},
                         "_id=?",
-                        new String[] {Integer.toString(intMaKH)},
+                        new String[]{Integer.toString(intMaKH)},
                         null, null, null);
                 if (cursor.moveToFirst()) {
                     String maKH = cursor.getString(0);
@@ -240,7 +239,7 @@ public class CustomerFormActivity extends AppCompatActivity {
                     EditText tvSoDT = findViewById(R.id.soDT);
                     tvSoDT.setText(soDT);
 
-                    ImageView ivAvatar = (ImageView)findViewById(R.id.avatar);
+                    ImageView ivAvatar = (ImageView) findViewById(R.id.avatar);
                     Log.d("avatarPathFromDB", avatarPath);
                     Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
                     ivAvatar.setImageBitmap(bitmap);
@@ -249,10 +248,10 @@ public class CustomerFormActivity extends AppCompatActivity {
                     Button btnCustomerForm = findViewById(R.id.btnInsert);
                     btnCustomerForm.setText("Cập nhật");
                 }
-                cursor.close();;
+                cursor.close();
+                ;
                 db.close();
-            }
-            catch (SQLiteException e){
+            } catch (SQLiteException e) {
                 Toast toast = Toast.makeText(this,
                         "Database unavailable", Toast.LENGTH_SHORT);
                 toast.show();
@@ -264,16 +263,15 @@ public class CustomerFormActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==1){
-            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 isChangeAvatar = true;
                 Intent i = new Intent(
                         Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 setResult(Activity.RESULT_OK, i);
                 //alter start activity for result
                 someActivityResultLauncher.launch(i);
-            }
-            else{
+            } else {
                 Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_LONG).show();
             }
         }

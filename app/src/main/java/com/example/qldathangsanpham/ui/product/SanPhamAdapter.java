@@ -13,27 +13,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.qldathangsanpham.R;
-import com.example.qldathangsanpham.Utility;
 import com.example.qldathangsanpham.model.SanPham;
+import com.example.qldathangsanpham.ui.product.spinner.Country;
+import com.example.qldathangsanpham.utillity.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable {
     Context context;
-    int resource;
-    List<SanPham> objects;
-    List<SanPham> filteredObjects;
+    List<SanPham> objects = new ArrayList<>();
+    List<SanPham> filteredObjects = new ArrayList<>();
+
     private ItemFilter filter = new ItemFilter();
 
-    public SanPhamAdapter(@NonNull Context context, int resource, @NonNull List<SanPham> objects) {
-        super(context, resource, objects);
+    public SanPhamAdapter(@NonNull Context context, List<SanPham> objects) {
+        super(context, 0);
         this.context = context;
-        this.resource = resource;
 
-        this.objects = objects;
-        this.filteredObjects = objects;
-//        setList(objects);
+        setList(objects);
     }
 
     @Override
@@ -41,30 +39,48 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable 
         return filteredObjects.size();
     }
 
+    @Nullable
+    @Override
+    public SanPham getItem(int position) {
+        return filteredObjects.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        convertView = LayoutInflater.from(context).inflate(resource, null);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.activity_san_pham_view, parent, false);
+        }
 
         TextView tensp = convertView.findViewById(R.id.tenSP);
         TextView xuatXu = convertView.findViewById(R.id.xuatXu);
         TextView gia = convertView.findViewById(R.id.gia);
 
-        SanPham sp = objects.get(position);
+        SanPham sp = filteredObjects.get(position);
 
         tensp.setText(String.format("%s", sp.getTensp()));
-        xuatXu.setText(String.format("Xuất xứ: %s", sp.getXuatXu()));
+        xuatXu.setText(String.format("Xuất xứ: %s", Country.getCountryById(sp.getXuatXu()).getName()));
         gia.setText(Utility.showGia(sp.getGia()));
 
         return convertView;
     }
 
     public void setList(List<SanPham> list) {
-        this.objects = list;
-        this.filteredObjects = list;
+        objects.clear();
+        filteredObjects.clear();
+
+        objects.addAll(list);
+        filteredObjects.addAll(list);
+
         notifyDataSetChanged();
     }
 
+    @Override
     public Filter getFilter() {
         return filter;
     }
@@ -75,15 +91,10 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable 
             String search = constraint.toString().toLowerCase();
 
             FilterResults results = new FilterResults();
-
-            final List<SanPham> list = objects;
-
-            int count = list.size();
-            final ArrayList<SanPham> nlist = new ArrayList<SanPham>(count);
+            ArrayList<SanPham> nlist = new ArrayList<>();
 
             for (SanPham s : objects) {
-                if (s.getTensp().toLowerCase().trim().contains(search) ||
-                        s.getXuatXu().toLowerCase().trim().contains(search)) {
+                if (s.getTensp().toLowerCase().contains(search) || Country.getCountryById(s.getXuatXu()).getName().toLowerCase().contains(search)) {
                     nlist.add(s);
                 }
             }
@@ -97,7 +108,9 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> implements Filterable 
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredObjects = (ArrayList<SanPham>) results.values;
+            filteredObjects.clear();
+            filteredObjects.addAll((ArrayList<SanPham>) results.values);
+
             notifyDataSetChanged();
         }
 

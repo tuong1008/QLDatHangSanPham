@@ -5,9 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -49,8 +47,6 @@ public class MainSanPham extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        Log.d(TAG, "San pham list size: " + sanPhamList.size());
         adapter.setList(sanPhamList);
     }
 
@@ -59,8 +55,6 @@ public class MainSanPham extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        MenuItem menuItem = findViewById(R.id.search);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setQueryHint("Nhập tên/xuất xứ sản phẩm");
@@ -75,20 +69,19 @@ public class MainSanPham extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText.toString());
+                adapter.getFilter().filter(newText);
+
                 return false;
             }
         });
-
         return true;
     }
 
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+    ActivityResultLauncher<Intent> sanPhamFormLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    // There are no request codes
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
 
@@ -102,8 +95,6 @@ public class MainSanPham extends AppCompatActivity {
         db = new DatabaseHelper(this);
         sanPhamList = db.getAllSanPham();
 
-        Log.d(TAG, sanPhamList.toString());
-
         list = findViewById(R.id.list);
         add = findViewById(R.id.btnInsert);
 
@@ -113,15 +104,14 @@ public class MainSanPham extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        adapter = new SanPhamAdapter(this, R.layout.activity_san_pham_view, sanPhamList);
+        adapter = new SanPhamAdapter(this, sanPhamList);
         list.setAdapter(adapter);
-
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = new Intent(MainSanPham.this, FormSanPham.class);
                 intent.putExtra("SAN_PHAM", sanPhamList.get(position));
-                someActivityResultLauncher.launch(intent);
+                sanPhamFormLauncher.launch(intent);
             }
         });
 
@@ -129,7 +119,7 @@ public class MainSanPham extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), FormSanPham.class);
-                someActivityResultLauncher.launch(intent);
+                sanPhamFormLauncher.launch(intent);
             }
         });
     }

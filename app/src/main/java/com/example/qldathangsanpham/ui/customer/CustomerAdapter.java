@@ -1,7 +1,6 @@
 package com.example.qldathangsanpham.ui.customer;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 
 import com.example.qldathangsanpham.R;
 import com.example.qldathangsanpham.model.KhachHang;
-import com.example.qldathangsanpham.model.SanPham;
-import com.example.qldathangsanpham.ui.product.SanPhamAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +52,7 @@ public class CustomerAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public long getItemId(int position) {
-        return  ((KhachHang) getItem(position)).get_id();
+        return ((KhachHang) getItem(position)).get_id();
     }
 
     @Override
