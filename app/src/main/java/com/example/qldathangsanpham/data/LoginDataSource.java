@@ -4,9 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.qldathangsanpham.AngDoDatabaseHelper;
+import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.data.model.LoggedInUser;
 
 import java.io.IOException;
@@ -21,13 +20,13 @@ public class LoginDataSource {
 
     public LoginDataSource(Context mcontext) {
         this.mcontext = mcontext;
-        mDatabase=new AngDoDatabaseHelper(mcontext).getWritableDatabase();
+        mDatabase=new DatabaseHelper(mcontext).getWritableDatabase();
     }
     public Result<LoggedInUser> login(String username, String password) {
         try {
             // TODO: handle loggedInUser authentication
-            mDatabase=new AngDoDatabaseHelper(mcontext).getWritableDatabase();
-            Cursor  cursor=mDatabase.query("TAIKHOAN",null,"USERNAME=?",new String[]{username},null,null,null);
+            mDatabase=new DatabaseHelper(mcontext).getWritableDatabase();
+            Cursor  cursor=mDatabase.query(DatabaseHelper.TB_TAI_KHOAN_NHAN_VIEN,null,"username=?",new String[]{username},null,null,null);
             if(cursor.moveToFirst())
             {
                 String id=cursor.getString(0);
@@ -56,10 +55,10 @@ public class LoginDataSource {
 
     public Boolean changePassword(String username,String password,String newPassword){
         try{
-            mDatabase=new AngDoDatabaseHelper(mcontext).getWritableDatabase();
+            mDatabase=new DatabaseHelper(mcontext).getWritableDatabase();
             ContentValues values=new ContentValues();
-            values.put("password",newPassword);
-         if(mDatabase.update("TaiKhoan",values,"username=? and password=?",new String[]{username,password})>0){
+            values.put(DatabaseHelper.CL_PASSWORD,newPassword);
+         if(mDatabase.update(DatabaseHelper.TB_TAI_KHOAN_NHAN_VIEN,values,DatabaseHelper.CL_USERNAME+"=? and "+DatabaseHelper.CL_PASSWORD+"=?",new String[]{username,password})>0){
              return true;
          }
          else{

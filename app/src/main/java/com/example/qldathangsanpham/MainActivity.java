@@ -3,8 +3,6 @@ package com.example.qldathangsanpham;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import com.example.qldathangsanpham.ui.customer.CustomerActivity;
+import com.example.qldathangsanpham.ui.customer.ProfileActivity;
+import com.example.qldathangsanpham.ui.product.MainSanPham;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,11 +52,17 @@ public class MainActivity extends AppCompatActivity {
         l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent;
                 switch (position){
                     case 1:
-                        Intent intent = new Intent(MainActivity.this, CustomerActivity.class);
+                        intent = new Intent(MainActivity.this, CustomerActivity.class);
                         startActivity(intent);
                         break;
+                    case 2:
+                        intent = new Intent(MainActivity.this, MainSanPham.class);
+                        startActivity(intent);
+                        break;
+
                 }
             }
         });
@@ -78,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_create_order:
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.export_pdf:
+                Toast.makeText(this, "export pdf", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

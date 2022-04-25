@@ -44,7 +44,7 @@ public class RegisterViewModel extends ViewModel {
                 registerResult.setValue(new RegisterResult(data));
         }
         else{
-            registerResult.setValue(new RegisterResult(R.string.login_failed));
+            registerResult.setValue(new RegisterResult(R.string.register_failed));
         }
     }
     public void registerDataChanged(String username,String password,byte[] avatar,String hovaten)
@@ -60,6 +60,9 @@ public class RegisterViewModel extends ViewModel {
             else if(hovaten.isEmpty())
             {
                 registerFromState.setValue(new RegisterFromState(null,null,R.string.invalid_fullname,null));
+            }
+            else{
+                registerFromState.setValue(new RegisterFromState(true));
             }
     }
     public boolean isValidUsername(String username)

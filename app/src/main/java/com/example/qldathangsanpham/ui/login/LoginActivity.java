@@ -6,9 +6,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -26,11 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.qldathangsanpham.AngDoDatabaseHelper;
 import com.example.qldathangsanpham.FullscreenActivity;
 import com.example.qldathangsanpham.R;
-import com.example.qldathangsanpham.ui.login.LoginViewModel;
-import com.example.qldathangsanpham.ui.login.LoginViewModelFactory;
 import com.example.qldathangsanpham.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -91,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 loadingProgressBar.setVisibility(View.GONE);
+
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
 

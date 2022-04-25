@@ -1,8 +1,10 @@
-package com.example.qldathangsanpham;
+package com.example.qldathangsanpham.ui.customer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.qldathangsanpham.R;
 
 public class ProfileActivity extends AppCompatActivity {
 
