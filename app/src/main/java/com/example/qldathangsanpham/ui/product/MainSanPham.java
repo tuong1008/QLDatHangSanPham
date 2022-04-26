@@ -47,39 +47,12 @@ public class MainSanPham extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham_main);
 
-        NavigationView navView = findViewById(R.id.nv_nav_view);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_hamburger_menu);
         setSupportActionBar(toolbar);
 
-        drawer = findViewById(R.id.drawer);
-
         NavigationView nvDrawer = findViewById(R.id.nv_nav_view);
-
-        nvDrawer.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Log.d(TAG, "Drawer clicked");
-
-                        Intent intent;
-                        menuItem.setChecked(true);
-
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_order_activity:
-                                intent = new Intent(MainSanPham.this, OrderActivity.class);
-                                startActivity(intent);
-                                break;
-                            case R.id.nav_customer_activity:
-                                intent = new Intent(MainSanPham.this, CustomerActivity.class);
-                                startActivity(intent);
-                                break;
-                        }
-                        drawer.closeDrawers();
-                        return true;
-                    }
-                });
+        setupDrawer(nvDrawer);
 
         initComponents();
     }
@@ -122,17 +95,19 @@ public class MainSanPham extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "Clicking option items");
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawer.openDrawer(GravityCompat.START);
                 break;
             case R.id.action_view_chart:
-                Log.d(TAG, "Clicking view chart");
+                // TODO view some chart here
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + item.getItemId());
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     ActivityResultLauncher<Intent> sanPhamFormLauncher = registerForActivityResult(
@@ -149,15 +124,38 @@ public class MainSanPham extends AppCompatActivity {
                 }
             });
 
+    private void setupDrawer(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent intent;
+                        menuItem.setChecked(true);
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_order_activity:
+                                intent = new Intent(MainSanPham.this, OrderActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.nav_customer_activity:
+                                intent = new Intent(MainSanPham.this, CustomerActivity.class);
+                                startActivity(intent);
+                                break;
+                        }
+                        drawer.closeDrawers();
+                        return true;
+                    }
+                });
+    }
+
     private void initComponents() {
         db = new DatabaseHelper(this);
         sanPhamList = db.getAllSanPham();
 
+        drawer = findViewById(R.id.drawer);
+
         list = findViewById(R.id.list);
         add = findViewById(R.id.btnInsert);
-
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         adapter = new SanPhamAdapter(this, sanPhamList);
         list.setAdapter(adapter);
