@@ -3,6 +3,7 @@ package com.example.qldathangsanpham.ui.customer;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,15 +29,18 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class CustomerChartFragment extends Fragment {
+    DatabaseHelper angDoDatabaseHelper;
     private SQLiteDatabase db;
     private static final String SET_LABEL = "Số Lượng";
     private List<String> alphabets = new ArrayList<>();
+    private BarData data;
 
     private BarChart chart;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        angDoDatabaseHelper = new DatabaseHelper(getActivity());
     }
 
     @Nullable
@@ -46,11 +50,17 @@ public class CustomerChartFragment extends Fragment {
 
         chart = view.findViewById(R.id.fragment_verticalbarchart_chart);
 
-        BarData data = createChartData();
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        alphabets.clear();
+        data = createChartData();
         configureChartAppearance();
         prepareChartData(data);
-
-        return view;
     }
 
     private void prepareChartData(BarData data) {
@@ -60,12 +70,9 @@ public class CustomerChartFragment extends Fragment {
     }
 
     private BarData createChartData() {
-        SQLiteOpenHelper angDoDatabaseHelper = new DatabaseHelper(getActivity());
-        db = angDoDatabaseHelper.getReadableDatabase();
-        TreeMap<String, Integer> thongKeTenKH = ((DatabaseHelper) angDoDatabaseHelper).getThongKeTenKH(db);
+        TreeMap<String, Integer> thongKeTenKH = angDoDatabaseHelper.getThongKeTenKH();
 
         ArrayList<BarEntry> values = new ArrayList<>();
-
         int i = 0;
         for (Map.Entry<String, Integer>
                 entry : thongKeTenKH.entrySet()) {

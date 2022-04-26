@@ -29,7 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class CustomerFragment extends Fragment {
-    private SQLiteDatabase db;
+    DatabaseHelper angDoDatabaseHelper;
     public static CustomerAdapter customerAdapter;
     public static List<KhachHang> customersList;
     ListView lvCustomer;
@@ -41,32 +41,10 @@ public class CustomerFragment extends Fragment {
         customerAdapter.notifyDataSetChanged();
     }
 
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Log.d("------customerFragment", "onActivityResult");
-
-                    }
-                }
-            });
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        Log.d("------customerFragment", "resume");
-//        SQLiteOpenHelper angDoDatabaseHelper = new DatabaseHelper(getActivity());
-//        db = angDoDatabaseHelper.getReadableDatabase();
-//        customersList = ((DatabaseHelper) angDoDatabaseHelper).getAllCustomers(db);
-//        customerAdapter.setItems(customersList);
-//    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        angDoDatabaseHelper = new DatabaseHelper(getActivity());
     }
 
     @Override
@@ -80,10 +58,8 @@ public class CustomerFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), CustomerFormActivity.class);
-                getActivity().setResult(Activity.RESULT_OK, i);
                 i.putExtra(EXTRA_MAKH, -1);
-                //alter start activity for result
-                someActivityResultLauncher.launch(i);
+                getActivity().startActivity(i);
             }
         });
         setCustomersListView();
@@ -92,9 +68,7 @@ public class CustomerFragment extends Fragment {
 
     private void setCustomersListView() {
         try {
-            SQLiteOpenHelper angDoDatabaseHelper = new DatabaseHelper(getActivity());
-            db = angDoDatabaseHelper.getReadableDatabase();
-            customersList = ((DatabaseHelper) angDoDatabaseHelper).getAllCustomers(db);
+            customersList = angDoDatabaseHelper.getAllCustomers();
             customerAdapter = new CustomerAdapter(getActivity(), customersList);
             lvCustomer.setAdapter(customerAdapter);
             lvCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
