@@ -28,8 +28,11 @@ import com.example.qldathangsanpham.model.KhachHang;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -87,7 +90,6 @@ public class CustomerActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 CustomerFragment.customerAdapter.getFilter().filter(newText);
                 pagerAdapter.notifyDataSetChanged();
-                Toast.makeText(CustomerActivity.this, "text in search changed", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -117,7 +119,6 @@ public class CustomerActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.export_pdf:
                 if (checkPermission()) {
-                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
                     generatePDF();
                 } else {
                     requestPermission();
@@ -131,8 +132,10 @@ public class CustomerActivity extends AppCompatActivity {
 
     private void generatePDF() {
         Document document = new Document();
+
         try {
-            File file = new File(Environment.getExternalStorageDirectory(), "GFG.pdf");
+            BaseFont bf = BaseFont.createFont("res/font/roboto.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            File file = new File(Environment.getExternalStorageDirectory(), "DSKH.pdf");
             PdfWriter.getInstance(document,
                     new FileOutputStream(file));
 
@@ -142,9 +145,9 @@ public class CustomerActivity extends AppCompatActivity {
 
             // Header
             PdfPCell cell1 = new PdfPCell(new Phrase("ID"));
-            PdfPCell cell2 = new PdfPCell(new Phrase("Ho ten"));
-            PdfPCell cell3 = new PdfPCell(new Phrase("Đia chi"));
-            PdfPCell cell4 = new PdfPCell(new Phrase("So dien thoai"));
+            PdfPCell cell2 = new PdfPCell(new Phrase("Họ tên",new Font(bf, 14)));
+            PdfPCell cell3 = new PdfPCell(new Phrase("Địa chỉ",new Font(bf, 14)));
+            PdfPCell cell4 = new PdfPCell(new Phrase("Số điện thoại",new Font(bf, 14)));
             PdfPCell cell5 = new PdfPCell(new Phrase("Avatar"));
             table.addCell(cell1);
             table.addCell(cell2);
@@ -158,8 +161,8 @@ public class CustomerActivity extends AppCompatActivity {
                 Image image = Image.getInstance(i.getAvatar());
                 image.scaleAbsolute(70f, 70f);
                 PdfPCell cell1x = new PdfPCell(new Phrase(String.valueOf(i.get_id())));
-                PdfPCell cell2x = new PdfPCell(new Phrase(i.getHoTen()));
-                PdfPCell cell3x = new PdfPCell(new Phrase(i.getDiaChi()));
+                PdfPCell cell2x = new PdfPCell(new Phrase(i.getHoTen(),new Font(bf, 14)));
+                PdfPCell cell3x = new PdfPCell(new Phrase(i.getDiaChi(),new Font(bf, 14)));
                 PdfPCell cell4x = new PdfPCell(new Phrase(i.getSdt()));
                 PdfPCell cell5x = new PdfPCell(image, false);
                 table.addCell(cell1x);
@@ -201,7 +204,7 @@ public class CustomerActivity extends AppCompatActivity {
                 boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
                 if (writeStorage && readStorage) {
-                    Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                    Log.d("---exportPDF", "Permission Granted");
                 } else {
                     Toast.makeText(this, "Permission Denined.", Toast.LENGTH_SHORT).show();
                     finish();

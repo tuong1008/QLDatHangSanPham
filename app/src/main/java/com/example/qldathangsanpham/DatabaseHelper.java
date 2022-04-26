@@ -322,11 +322,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertTaiKhoanNhanVien(db, "ledinhtrieu@gmail.com", "ledinhtrieu");
         insertTaiKhoanNhanVien(db, "nguyentanthien@gmail.com", "nguyentanthien");
         insertTaiKhoanNhanVien(db, "nguyenthanhtu@gmail.com", "nguyenthanhtu");
-        insertHoSoKhachHang(db, "Nguyễn Lê Tấn Tài", "Thủ Đức, TPHCM", "0987654321", "1");
-        insertHoSoKhachHang(db, "Lê Trọng Đạt", "Thủ Đức, TPHCM", "8970777444", "1");
-        insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345", "1");
-        insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586", "1");
-        insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769", "1");
+        insertHoSoKhachHang(db, "Nguyễn Lê Tấn Tài", "Thủ Đức, TPHCM", "0987654321", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/0987654321.jpg");
+        insertHoSoKhachHang(db, "Lê Trọng Đạt", "Thủ Đức, TPHCM", "8970777444", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/8970777444.jpg");
+        insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/0987912345.jpg");
+        insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/1275849586.jpg");
+        insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/9057485769.jpg");
         insertSanPham(db, "TV Samsung 55 inch", 20000000, "VN");
         insertSanPham(db, "Tủ Lạnh Panasonic 2 Ngăn", 10000000, "JP");
         insertSanPham(db, "TV Sony 40 inch", 15000000, "KR");
