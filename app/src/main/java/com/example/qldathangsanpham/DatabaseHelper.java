@@ -7,8 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.qldathangsanpham.model.KhachHang;
 import com.example.qldathangsanpham.model.SanPham;
@@ -115,6 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         updateMyDatabase(db, oldVersion, newVersion);
     }
 
+    @SuppressLint("NewApi")
     public static int insertTaiKhoanNhanVien(SQLiteDatabase db, String username, String password) {
         ContentValues values = new ContentValues();
         values.put(CL_USERNAME, username);
@@ -188,7 +192,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    @SuppressLint("Range")
+    @SuppressLint({"Range", "NewApi"})
     public static List<Map<String, String>> findAllOrder(Context context) {
         List<Map<String, String>> list = new ArrayList<>();
         String query = "SELECT DDH." + CL_ID + ", HSKH." + CL_HO_TEN + ", DDH." + CL_NGAY_DAT_HANG + ", HSKH." + CL_ID + " AS customerId"
@@ -343,6 +347,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    @SuppressLint("NewApi")
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void insertData(SQLiteDatabase db) {
         insertTaiKhoanNhanVien(db, "nguyenmanhtuong@gmail.com", "nguyenmanhtuong");
         insertTaiKhoanNhanVien(db, "buiminhto@gmail.com", "buiminhto");
@@ -382,6 +388,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    @SuppressLint("NewApi")
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
             db.execSQL(QUERY_CREATE_TB_TAI_KHOAN_NHAN_VIEN);
@@ -397,7 +405,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int nextAutoIncrement(String table) {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT MAX(_id) AS max_id FROM " + table;
-        Cursor cursor = db.rawQuery(query, null);
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(query, null);
 
         int id = 0;
         if (cursor.moveToFirst()) {
@@ -410,7 +418,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public String insertCustomer(String tenKH, String diaChi,
-                               String soDT, String avatarPath) {
+                                 String soDT, String avatarPath) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
@@ -432,7 +440,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public String updateCustomer(String tenKH, String diaChi,
-                                      String soDT, String maKH) {
+                                 String soDT, String maKH) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
@@ -471,10 +479,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<SanPham> getAllSanPham() {
         List<SanPham> list = new ArrayList<>();
-
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TB_SAN_PHAM, null);
-
         try {
             if (cursor.moveToFirst()) {
                 do {
