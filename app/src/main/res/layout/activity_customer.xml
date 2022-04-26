@@ -10,10 +10,13 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        app:elevation="0dp"
         android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar">
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="45dp"
+            android:layout_margin="@dimen/_20dp"
+            style="@style/toolbar"
             android:id="@+id/toolbar"/>
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
