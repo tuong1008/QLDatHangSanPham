@@ -7,22 +7,9 @@ import androidx.annotation.RequiresApi;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.YearMonth;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.WeekFields;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Utility {
@@ -56,10 +43,26 @@ public class Utility {
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
 
+    public static String showGia(Double gia) {
+        return String.format("Giá: %,.0fđ", gia);
+    }
+
+//    public static List<Map<String, String>> testOrdersData() {
+//        List<Map<String, String>> orders = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            Map<String, String> oder = new HashMap<>();
+//            oder.put(DatabaseHelper.CL_ID, "890921231");
+//            oder.put(DatabaseHelper.Cl_NGAY_DAT_HANG, "20/04/2022");
+//            oder.put(DatabaseHelper.CL_HO_TEN, "Bùi Minh Tơ");
+//            orders.add(oder);
+//        }
+//        return orders;
+
 //    @SuppressLint("SimpleDateFormat")
 //    public static Date getDate(String datetime) throws ParseException {
 //        @SuppressLint("SimpleDateFormat") Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").parse(datetime);
 //        return date;
+
 //    }
 //
 //    public static boolean isDateFallInCurrentMonth(String input) throws ParseException {

@@ -109,7 +109,6 @@ public class CustomerFormActivity extends AppCompatActivity {
         String strAddOrUpdate = btnAddOrUpdate.getText().toString();
 
         if (strAddOrUpdate.equals("Thêm")) {
-            int nextID = andDoDatabaseHelper.nextAutoIncrement("HoSoKhachHang");
 
             //save avatar to internal storage
             BitmapDrawable drawable = (BitmapDrawable) avatar.getDrawable();
@@ -152,6 +151,11 @@ public class CustomerFormActivity extends AppCompatActivity {
                 File myPath = new File(avatarPath);
                 FileOutputStream fos = null;
                 try {
+                    if (!myPath.exists()){
+                        ContextWrapper cw = new ContextWrapper(this.getApplicationContext());
+                        File directory = cw.getDir("avatarCus", Context.MODE_PRIVATE);
+                        myPath = new File(directory, strSoDT + ".jpg");
+                    }
                     fos = new FileOutputStream(myPath);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 } catch (Exception e) {
@@ -171,7 +175,7 @@ public class CustomerFormActivity extends AppCompatActivity {
             try {
                 String message = andDoDatabaseHelper.updateCustomer(strTenKH, strDiaChi, strSoDT, strMaKH);
                 if (message==null){
-                    Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Updated", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this, message, Toast.LENGTH_LONG).show();
                 }
