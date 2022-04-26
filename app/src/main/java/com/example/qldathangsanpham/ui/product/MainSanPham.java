@@ -3,7 +3,6 @@ package com.example.qldathangsanpham.ui.product;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,13 +46,6 @@ public class MainSanPham extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_hamburger_menu);
-        setSupportActionBar(toolbar);
-
-        NavigationView nvDrawer = findViewById(R.id.nv_nav_view);
-        setupDrawer(nvDrawer);
-
         initComponents();
     }
 
@@ -69,13 +61,9 @@ public class MainSanPham extends AppCompatActivity {
 
         MenuItem search = menu.findItem(R.id.search);
 
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) search.getActionView();
-
-//        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setQueryHint("Nhập tên/xuất xứ sản phẩm");
         searchView.setMaxWidth(Integer.MAX_VALUE);
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -95,8 +83,6 @@ public class MainSanPham extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(TAG, "Clicking option items");
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawer.openDrawer(GravityCompat.START);
@@ -153,6 +139,13 @@ public class MainSanPham extends AppCompatActivity {
         sanPhamList = db.getAllSanPham();
 
         drawer = findViewById(R.id.drawer);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_hamburger_menu);
+        setSupportActionBar(toolbar);
+
+        NavigationView nvDrawer = findViewById(R.id.nv_nav_view);
+        setupDrawer(nvDrawer);
 
         list = findViewById(R.id.list);
         add = findViewById(R.id.btnInsert);

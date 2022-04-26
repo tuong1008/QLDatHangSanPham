@@ -97,7 +97,6 @@ public class OrderActivity extends AppCompatActivity {
                                 startActivity(intent2);
                                 break;
                         }
-//                        mDrawer.closeDrawer(GravityCompat.START);
                         mDrawer.closeDrawers();
 
                         return true;
