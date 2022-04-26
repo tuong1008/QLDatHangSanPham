@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/_80dp"
+    android:paddingBottom="@dimen/_30dp">
+
+
+    <ImageView
+        android:id="@+id/iv_anchor"
+        android:layout_width="@dimen/_30dp"
+        android:layout_height="@dimen/_30dp"
+        android:src="@drawable/ic_anchor"
+        app:layout_constraintEnd_toStartOf="@id/iv_a"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_a"
+        android:layout_width="@dimen/_30dp"
+        android:layout_height="@dimen/_30dp"
+        android:src="@drawable/ic_a"
+        app:layout_constraintEnd_toStartOf="@+id/iv_n"
+        app:layout_constraintStart_toEndOf="@+id/iv_anchor" />
+
+    <ImageView
+        android:id="@+id/iv_n"
+        android:layout_width="@dimen/_30dp"
+        android:layout_height="@dimen/_30dp"
+        android:src="@drawable/ic_n"
+        app:layout_constraintEnd_toStartOf="@id/iv_g"
+        app:layout_constraintStart_toEndOf="@+id/iv_a" />
+
+    <ImageView
+        android:id="@+id/iv_g"
+        android:layout_width="@dimen/_30dp"
+        android:layout_height="@dimen/_30dp"
+        android:src="@drawable/ic_g"
+        app:layout_constraintEnd_toStartOf="@id/iv_d"
+        app:layout_constraintStart_toEndOf="@+id/iv_n" />
+
+    <ImageView
+        android:id="@+id/iv_d"
+        android:layout_width="@dimen/_30dp"
+        android:layout_height="@dimen/_30dp"
+        android:src="@drawable/ic_d"
+        app:layout_constraintEnd_toStartOf="@id/iv_o"
+        app:layout_constraintStart_toEndOf="@+id/iv_g" />
+
+    <ImageView
+        android:id="@+id/iv_o"
+        android:layout_width="@dimen/_30dp"
+        android:layout_height="@dimen/_30dp"
+        android:src="@drawable/ic_o"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_d" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

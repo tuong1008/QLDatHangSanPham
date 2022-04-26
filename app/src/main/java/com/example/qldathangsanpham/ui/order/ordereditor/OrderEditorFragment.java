@@ -2,6 +2,7 @@ package com.example.qldathangsanpham.ui.order.ordereditor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -36,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
 import com.example.qldathangsanpham.Utility;
+import com.example.qldathangsanpham.ui.login.SaveSharedPreference;
 import com.example.qldathangsanpham.ui.order.OrderActivity;
 import com.example.qldathangsanpham.ui.order.SwipeToDeleteCallback;
 import com.example.qldathangsanpham.ui.order.oderhome.OrderHomeFragmentDirections;
@@ -52,6 +54,7 @@ import java.util.Map;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -138,7 +141,7 @@ public class OrderEditorFragment extends Fragment {
         if (orderId == 0) {
             SQLiteOpenHelper databaseHelper = new DatabaseHelper(view.getContext());
             SQLiteDatabase db = databaseHelper.getWritableDatabase();
-            orderId = DatabaseHelper.insertDonDatHang(db, Utility.getCurrentDateTime(), 1, customerId);
+            orderId = DatabaseHelper.insertDonDatHang(db, Utility.getCurrentDateTime(), SaveSharedPreference.getId(context), customerId);
         } else {
             SQLiteOpenHelper databaseHelper = new DatabaseHelper(view.getContext());
             SQLiteDatabase db = databaseHelper.getWritableDatabase();
@@ -160,11 +163,10 @@ public class OrderEditorFragment extends Fragment {
                     Navigation.findNavController(view).navigate(OrderEditorFragmentDirections.actionChangeCustomer(orderId));
                 }
         );
-        if (checkPermission()) {
-            Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show();
-        } else {
+        if (!checkPermission()) {
             requestPermission();
         }
+
         return view;
     }
 

@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Quản Lý Đặt Hàng</string>
-    <string name="app_short_name">QL ĐH SP</string>
+
+    <string name="app_name">OrderMaster</string>
+    <string name="app_short_name">OrderMaster</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile">Thông tin cá nhân</string>
     <string name="customer_label">Quản lý thông tin khách hàng</string>
