@@ -44,6 +44,7 @@ public class CustomerFormActivity extends AppCompatActivity {
     final int MyVersion = Build.VERSION.SDK_INT;
     String avatarPath;
     boolean isChangeAvatar = false;
+    DatabaseHelper andDoDatabaseHelper;
 
     public void onLoadPicture(View view) {
         //request permission to stored
@@ -95,8 +96,6 @@ public class CustomerFormActivity extends AppCompatActivity {
 
 
     public void onClickInsertOrUpdate(View view) {
-        SQLiteOpenHelper andDoDatabaseHelper =
-                new DatabaseHelper(CustomerFormActivity.this);
 
         EditText tenKH = findViewById(R.id.tenKH);
         EditText diaChi = findViewById(R.id.diaChi);
@@ -110,8 +109,7 @@ public class CustomerFormActivity extends AppCompatActivity {
         String strAddOrUpdate = btnAddOrUpdate.getText().toString();
 
         if (strAddOrUpdate.equals("Thêm")) {
-            SQLiteDatabase db = andDoDatabaseHelper.getWritableDatabase();
-            int nextID = DatabaseHelper.nextAutoIncrement(db, "HoSoKhachHang");
+            int nextID = andDoDatabaseHelper.nextAutoIncrement("HoSoKhachHang");
 
             //save avatar to internal storage
             BitmapDrawable drawable = (BitmapDrawable) avatar.getDrawable();
@@ -122,7 +120,7 @@ public class CustomerFormActivity extends AppCompatActivity {
             // data/user/0/com.example.qldathangsanpham/app_avatarCus/
             File directory = cw.getDir("avatarCus", Context.MODE_PRIVATE);
             // Create .jpg
-            File myPath = new File(directory, nextID + ".jpg");
+            File myPath = new File(directory, strSoDT + ".jpg");
 
             FileOutputStream fos = null;
             try {
@@ -138,11 +136,12 @@ public class CustomerFormActivity extends AppCompatActivity {
                 }
             }
 
-            try {
-                DatabaseHelper.insertCustomer(db, strTenKH, strDiaChi, strSoDT, myPath.getAbsolutePath());
-                Toast.makeText(this, "Inserted", Toast.LENGTH_SHORT).show();
-            } catch (SQLiteException e) {
-                e.printStackTrace();
+
+            String message = andDoDatabaseHelper.insertCustomer(strTenKH, strDiaChi, strSoDT, myPath.getAbsolutePath());
+            if (message==null){
+                Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
         } else {
             //replace old image
@@ -170,9 +169,12 @@ public class CustomerFormActivity extends AppCompatActivity {
             String strMaKH = maKH.getText().toString();
 
             try {
-                SQLiteDatabase db = andDoDatabaseHelper.getWritableDatabase();
-                DatabaseHelper.updateCustomer(db, strTenKH, strDiaChi, strSoDT, strMaKH);
-                Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
+                String message = andDoDatabaseHelper.updateCustomer(strTenKH, strDiaChi, strSoDT, strMaKH);
+                if (message==null){
+                    Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                }
             } catch (SQLiteException e) {
                 e.printStackTrace();
             }
@@ -181,16 +183,24 @@ public class CustomerFormActivity extends AppCompatActivity {
     }
 
     public void onClickDelete(View view) {
-        SQLiteOpenHelper andDoDatabaseHelper =
-                new DatabaseHelper(CustomerFormActivity.this);
 
         EditText maKH = findViewById(R.id.maKH);
         String strMaKH = maKH.getText().toString();
+        try {
+            File avatar = new File(avatarPath);
+            avatar.delete();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
         try {
-            SQLiteDatabase db = andDoDatabaseHelper.getWritableDatabase();
-            DatabaseHelper.deleteCustomer(db, strMaKH);
-            Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+            String message = andDoDatabaseHelper.deleteCustomer(strMaKH);
+            if (message==null){
+                Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
         } catch (SQLiteException e) {
             e.printStackTrace();
         }
@@ -199,6 +209,7 @@ public class CustomerFormActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        andDoDatabaseHelper = new DatabaseHelper(this);
         setContentView(R.layout.activity_customer_form);
 
         int intMaKH = (Integer) getIntent().getExtras().get(CustomerActivity.EXTRA_MAKH);
@@ -249,7 +260,6 @@ public class CustomerFormActivity extends AppCompatActivity {
                     btnCustomerForm.setText("Cập nhật");
                 }
                 cursor.close();
-                ;
                 db.close();
             } catch (SQLiteException e) {
                 Toast toast = Toast.makeText(this,

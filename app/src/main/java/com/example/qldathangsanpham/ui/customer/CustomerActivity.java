@@ -39,14 +39,12 @@ import java.io.FileOutputStream;
 import java.util.List;
 
 public class CustomerActivity extends AppCompatActivity {
-
+    DatabaseHelper angDoDatabaseHelper;
     private SQLiteDatabase db;
-    private Cursor customersCursor;
-    private CustomerAdapter customerAdapter;
     SectionsPagerAdapter pagerAdapter;
     ViewPager2 pager;
-    private SearchViewModel searchViewModel;
     public static final String EXTRA_MAKH = "maKH";
+    public String[] tabTitles = {"Khách hàng", "Biểu đồ"};
     boolean runResume = false;
 
     // constant code for runtime permissions
@@ -55,6 +53,7 @@ public class CustomerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        angDoDatabaseHelper = new DatabaseHelper(this);
         setContentView(R.layout.activity_customer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,7 +66,7 @@ public class CustomerActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         new TabLayoutMediator(tabLayout, pager,
-                (tab, position) -> tab.setText("OBJECT " + (position + 1))
+                (tab, position) -> tab.setText(tabTitles[position])
         ).attach();
 
     }
@@ -100,13 +99,10 @@ public class CustomerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (runResume) {
-            Log.d("-----customerActivity", "resume");
-            DatabaseHelper angDoDatabaseHelper = new DatabaseHelper(CustomerActivity.this);
-            db = angDoDatabaseHelper.getReadableDatabase();
-            CustomerFragment.setCustomersList(angDoDatabaseHelper.getAllCustomers(db));
+            CustomerFragment.setCustomersList(angDoDatabaseHelper.getAllCustomers());
 
             CustomerFragment.customerAdapter.setItems(CustomerFragment.customersList);
-            pagerAdapter.notifyDataSetChanged();
+            pagerAdapter.notifyItemChanged(0);
         }
     }
 
@@ -156,9 +152,7 @@ public class CustomerActivity extends AppCompatActivity {
             table.addCell(cell4);
             table.addCell(cell5);
 
-            DatabaseHelper angDoDatabaseHelper = new DatabaseHelper(this);
-            db = angDoDatabaseHelper.getReadableDatabase();
-            List<KhachHang> allCustomers = angDoDatabaseHelper.getAllCustomers(db);
+            List<KhachHang> allCustomers = angDoDatabaseHelper.getAllCustomers();
 
             for (KhachHang i : allCustomers) {
                 Image image = Image.getInstance(i.getAvatar());

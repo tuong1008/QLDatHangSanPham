@@ -354,11 +354,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345", "1");
         insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586", "1");
         insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769", "1");
-        insertSanPham(db, "TV Samsung 55 inch", 20000000, "Hàn Quốc");
-        insertSanPham(db, "Tủ Lạnh Panasonic 2 Ngăn", 10000000, "Nhật Bản");
-        insertSanPham(db, "TV Sony 40 inch", 15000000, "Nhật Bản");
-        insertSanPham(db, "Máy Giặt Sharp 10L", 7000000, "Nhật Bản");
-        insertSanPham(db, "Laptop Dell Inspiron 7559", 14000000, "USA");
+        insertSanPham(db, "TV Samsung 55 inch", 20000000, "VN");
+        insertSanPham(db, "Tủ Lạnh Panasonic 2 Ngăn", 10000000, "JP");
+        insertSanPham(db, "TV Sony 40 inch", 15000000, "KR");
+        insertSanPham(db, "Máy Giặt Sharp 10L", 7000000, "RU");
+        insertSanPham(db, "Laptop Dell Inspiron 7559", 14000000, "US");
         insertDonDatHang(db, Utility.getCurrentDateTime(), 1, 1);
         insertDonDatHang(db, Utility.getCurrentDateTime(), 2, 2);
         insertDonDatHang(db, Utility.getCurrentDateTime(), 3, 3);
@@ -394,7 +394,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public static int nextAutoIncrement(SQLiteDatabase db, String table) {
+    public int nextAutoIncrement(String table) {
+        SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT MAX(_id) AS max_id FROM " + table;
         Cursor cursor = db.rawQuery(query, null);
 
@@ -408,27 +409,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public static void insertCustomer(SQLiteDatabase db, String tenKH, String diaChi,
-                                      String soDT, String avatarPath) {
-        ContentValues customerValues = new ContentValues();
-        customerValues.put(CL_HO_TEN, tenKH);
-        customerValues.put(CL_DIA_CHI, diaChi);
-        customerValues.put(CL_SDT, soDT);
-        customerValues.put(CL_AVATAR, avatarPath);
-        db.insert(TB_HO_SO_KHACH_HANG, null, customerValues);
+    public String insertCustomer(String tenKH, String diaChi,
+                               String soDT, String avatarPath) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues customerValues = new ContentValues();
+            customerValues.put(CL_HO_TEN, tenKH);
+            customerValues.put(CL_DIA_CHI, diaChi);
+            customerValues.put(CL_SDT, soDT);
+            customerValues.put(CL_AVATAR, avatarPath);
+
+            db.insertOrThrow(TB_HO_SO_KHACH_HANG, null, customerValues);
+            db.setTransactionSuccessful();
+
+            return null;
+        } catch (Exception e) {
+            return e.getMessage();
+        } finally {
+            db.endTransaction();
+        }
     }
 
-    public static void updateCustomer(SQLiteDatabase db, String tenKH, String diaChi,
+    public String updateCustomer(String tenKH, String diaChi,
                                       String soDT, String maKH) {
-        ContentValues customerValues = new ContentValues();
-        customerValues.put(CL_HO_TEN, tenKH);
-        customerValues.put(CL_DIA_CHI, diaChi);
-        customerValues.put(CL_SDT, soDT);
-        db.update(TB_HO_SO_KHACH_HANG, customerValues, "_id = ?", new String[]{maKH});
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues customerValues = new ContentValues();
+            customerValues.put(CL_HO_TEN, tenKH);
+            customerValues.put(CL_DIA_CHI, diaChi);
+            customerValues.put(CL_SDT, soDT);
+
+            db.update(TB_HO_SO_KHACH_HANG, customerValues, "_id = ?", new String[]{maKH});
+            db.setTransactionSuccessful();
+
+            return null;
+        } catch (Exception e) {
+            return e.getMessage();
+        } finally {
+            db.endTransaction();
+        }
+
+
     }
 
-    public static void deleteCustomer(SQLiteDatabase db, String maKH) {
-        db.delete(TB_HO_SO_KHACH_HANG, "_id = ?", new String[]{maKH});
+    public String deleteCustomer(String maKH) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TB_HO_SO_KHACH_HANG, "_id = ?", new String[]{maKH});
+            db.setTransactionSuccessful();
+
+            return null;
+        } catch (Exception e) {
+            return e.getMessage();
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public List<SanPham> getAllSanPham() {
@@ -519,7 +557,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<KhachHang> getAllCustomers(SQLiteDatabase db) {
+    public List<KhachHang> getAllCustomers() {
+        SQLiteDatabase db = getReadableDatabase();
         List<KhachHang> list = new ArrayList<>();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TB_HO_SO_KHACH_HANG, null);
@@ -547,7 +586,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public TreeMap<String, Integer> getThongKeTenKH(SQLiteDatabase db) {
+    public TreeMap<String, Integer> getThongKeTenKH() {
+        SQLiteDatabase db = getReadableDatabase();
         TreeMap<String, Integer> list = new TreeMap<String, Integer>();
 
         Cursor cursor = db.rawQuery("SELECT substr(hoTen,1,1) as ChuCaiDau, count(*) as SoLuong FROM HoSoKhachHang\n" +
@@ -570,4 +610,3 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 }
-

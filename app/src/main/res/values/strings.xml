@@ -76,4 +76,5 @@
     <string name="order_chart">Xem biểu đồ</string>
     <string name="fragment_order_chart">Biểu đồ đơn hàng</string>
 
+    <string name="vertical_ellipsis">&#8942;</string>
 </resources>
