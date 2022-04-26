@@ -24,9 +24,11 @@ import com.example.qldathangsanpham.R;
 import com.example.qldathangsanpham.model.SanPham;
 import com.example.qldathangsanpham.ui.customer.CustomerActivity;
 import com.example.qldathangsanpham.ui.order.OrderActivity;
+import com.example.qldathangsanpham.ui.product.chart.SanPhamChart;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MainSanPham extends AppCompatActivity {
@@ -88,7 +90,9 @@ public class MainSanPham extends AppCompatActivity {
                 drawer.openDrawer(GravityCompat.START);
                 break;
             case R.id.action_view_chart:
-                // TODO view some chart here
+                Intent intent = new Intent(MainSanPham.this, SanPhamChart.class);
+                intent.putExtra("LIST", (Serializable) sanPhamList);
+                startActivity(intent);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + item.getItemId());

@@ -40,6 +40,10 @@ public class Utility {
     }
 
 
+    public static String showGia(Double gia) {
+        return String.format("Giá: %,.0fđ", gia);
+    }
+
 //    public static List<Map<String, String>> testOrdersData() {
 //        List<Map<String, String>> orders = new ArrayList<>();
 //        for (int i = 0; i < 20; i++) {
