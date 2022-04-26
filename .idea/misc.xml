@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/drawable/ic_anchor_24.xml" value="0.1655" />
         <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/drawable/ic_chart.xml" value="0.1715" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1655" />
         <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/layout/activity_customer_view.xml" value="0.2064814814814815" />
         <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/layout/activity_home_drawer_header.xml" value="0.30648148148148147" />
         <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/layout/activity_order.xml" value="0.1865740740740741" />
