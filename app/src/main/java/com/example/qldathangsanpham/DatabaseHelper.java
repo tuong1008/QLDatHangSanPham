@@ -316,17 +316,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    @SuppressLint("Range")
+    public static List<Map<String, String>> getDataForOderChart(Context context) {
+        List<Map<String, String>> list = new ArrayList<>();
+        String query = "SELECT COUNT( DDH." + CL_ID + ") AS SLDDH ,KH." + CL_HO_TEN + " ,KH." + CL_ID
+                + " FROM " + TB_DON_DAT_HANG + " AS DDH JOIN " + TB_HO_SO_KHACH_HANG + " AS KH ON DDH."
+                + CL_HO_SO_KHACH_HANG_ID + " = KH." + CL_ID + " GROUP BY KH." + CL_ID;
+//        String query = "SELECT COUNT(" + CL_ID + ") AS SLDDH ," + CL_HO_SO_KHACH_HANG_ID
+//                + " FROM " + TB_DON_DAT_HANG + " ORDER BY " + CL_HO_SO_KHACH_HANG_ID;
+        try {
+            SQLiteOpenHelper databaseHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = databaseHelper.getReadableDatabase();
+            Cursor cursor = db.rawQuery(query, null);
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                Map<String, String> map = new HashMap<>();
+                map.put(CL_ID, String.valueOf(cursor.getString(cursor.getColumnIndex(CL_ID))));
+                map.put(CL_HO_TEN, cursor.getString(cursor.getColumnIndex(CL_HO_TEN)));
+                map.put("SLDDH", String.valueOf(cursor.getString(cursor.getColumnIndex("SLDDH"))));
+                list.add(map);
+            }
+            cursor.close();
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return list;
+    }
+
     private void insertData(SQLiteDatabase db) {
         insertTaiKhoanNhanVien(db, "nguyenmanhtuong@gmail.com", "nguyenmanhtuong");
         insertTaiKhoanNhanVien(db, "buiminhto@gmail.com", "buiminhto");
         insertTaiKhoanNhanVien(db, "ledinhtrieu@gmail.com", "ledinhtrieu");
         insertTaiKhoanNhanVien(db, "nguyentanthien@gmail.com", "nguyentanthien");
         insertTaiKhoanNhanVien(db, "nguyenthanhtu@gmail.com", "nguyenthanhtu");
-        insertHoSoKhachHang(db, "Nguyễn Lê Tấn Tài", "Thủ Đức, TPHCM", "0987654321", "1");
-        insertHoSoKhachHang(db, "Lê Trọng Đạt", "Thủ Đức, TPHCM", "8970777444", "1");
-        insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345", "1");
-        insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586", "1");
-        insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769", "1");
+        insertHoSoKhachHang(db, "Nguyễn Lê Tấn Tài", "Thủ Đức, TPHCM", "0987654321", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/0987654321.jpg");
+        insertHoSoKhachHang(db, "Lê Trọng Đạt", "Thủ Đức, TPHCM", "8970777444", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/8970777444.jpg");
+        insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/0987912345.jpg");
+        insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/1275849586.jpg");
+        insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769", "/data/user/0/com.example.qldathangsanpham/app_avatarCus/9057485769.jpg");
         insertSanPham(db, "TV Samsung 55 inch", 20000000, "VN");
         insertSanPham(db, "Tủ Lạnh Panasonic 2 Ngăn", 10000000, "JP");
         insertSanPham(db, "TV Sony 40 inch", 15000000, "KR");

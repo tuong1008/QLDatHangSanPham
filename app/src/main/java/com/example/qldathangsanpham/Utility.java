@@ -1,6 +1,9 @@
 package com.example.qldathangsanpham;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
@@ -8,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class Utility {
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String TIME_FORMAT = "HH:mm";
@@ -39,7 +43,6 @@ public class Utility {
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
 
-
     public static String showGia(Double gia) {
         return String.format("Giá: %,.0fđ", gia);
     }
@@ -54,18 +57,20 @@ public class Utility {
 //            orders.add(oder);
 //        }
 //        return orders;
+
+//    @SuppressLint("SimpleDateFormat")
+//    public static Date getDate(String datetime) throws ParseException {
+//        @SuppressLint("SimpleDateFormat") Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").parse(datetime);
+//        return date;
+
 //    }
 //
-//    public static List<Map<String, String>> testProductInOrdersData() {
-//        List<Map<String, String>> productInOrders = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            Map<String, String> map = new HashMap<>();
-//            map.put(DatabaseHelper.CL_TEN_SAN_PHAM, "TV Samsung");
-//            map.put(DatabaseHelper.CL_DON_GIA, "100");
-//            map.put(DatabaseHelper.CL_SO_LUONG, "1000000");
-//            productInOrders.add(map);
-//        }
-//        return productInOrders;
+//    public static boolean isDateFallInCurrentMonth(String input) throws ParseException {
+//        ZoneId timeZone = ZoneOffset.UTC; // Use whichever time zone makes sense for your use case
+//        @SuppressLint("SimpleDateFormat") Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").parse(input);
+//        LocalDateTime givenLocalDateTime = LocalDateTime.ofInstant(date.toInstant(), timeZone);
+//        YearMonth currentMonth = YearMonth.now(timeZone);
+//        return currentMonth.equals(YearMonth.from(givenLocalDateTime));
 //    }
 
 

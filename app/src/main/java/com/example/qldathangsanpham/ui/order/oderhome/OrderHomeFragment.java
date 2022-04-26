@@ -154,6 +154,8 @@ public class OrderHomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.toolbar_order_home, menu);
+        super.onCreateOptionsMenu(menu, inflater);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
@@ -174,6 +176,17 @@ public class OrderHomeFragment extends Fragment {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        switch (item.getItemId()) {
+            case R.id.action_show_order_chart:
+                Navigation.findNavController(view).navigate(OrderHomeFragmentDirections.actionShowOrderChart());
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private void filter(String text) {
         // creating a new array list to filter our data.
