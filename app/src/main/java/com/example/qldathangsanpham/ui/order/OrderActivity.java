@@ -1,6 +1,5 @@
 package com.example.qldathangsanpham.ui.order;
 
-import androidx.annotation.NonNull;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,7 +7,6 @@ import android.view.MenuItem;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,15 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 
 
 import android.annotation.SuppressLint;
-import android.app.FragmentManager;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 
 
 import com.example.qldathangsanpham.R;
@@ -97,7 +87,8 @@ public class OrderActivity extends AppCompatActivity {
                                 startActivity(intent2);
                                 break;
                         }
-                        mDrawer.closeDrawer(GravityCompat.START);
+                        mDrawer.closeDrawers();
+
                         return true;
                     }
                 });
@@ -122,7 +113,7 @@ public class OrderActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        getMenuInflater().inflate(R.menu.toolbar_order, menu);
         return true;
     }
 

@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/drawable/ic_chart.xml" value="0.1715" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/layout/activity_customer_view.xml" value="0.2064814814814815" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/layout/fragment_oder_chart.xml" value="0.2064814814814815" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/menu/home_toolbar.xml" value="0.2064814814814815" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/menu/menu_customer.xml" value="0.2064814814814815" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/menu/menu_items_layout.xml" value="0.2064814814814815" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/menu/menu_nav.xml" value="0.2064814814814815" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/menu/menu_toolbar.xml" value="0.2064814814814815" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/menu/search_menu.xml" value="0.2064814814814815" />
+        <entry key="..\:/Workspace/AndroidStudioProjects/AndroidGiuaKy/QLDatHangSanPham/app/src/main/res/menu/toolbar_order_editor.xml" value="0.2064814814814815" />
         <entry key="app/src/main/res/layout/activity_customer.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_customer_form.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_customer_view.xml" value="0.19375" />

@@ -11,6 +11,9 @@
         android:label="@string/fragment_order_home"
         tools:layout="@layout/fragment_order_home">
         <action
+            android:id="@+id/action_show_order_chart"
+            app:destination="@id/fragment_order_chart" />
+        <action
             android:id="@+id/action_pick_customer"
             app:destination="@id/fragment_customer_picker" />
         <action
@@ -74,6 +77,7 @@
             android:name="customer_id"
             android:defaultValue="0"
             app:argType="integer" />
+
         <action
             android:id="@+id/action_add_product_to_order"
             app:destination="@id/fragement_product_adder">
@@ -138,5 +142,10 @@
                 app:nullable="false" />
         </action>
     </fragment>
+    <fragment
+        android:id="@+id/fragment_order_chart"
+        android:name="com.example.qldathangsanpham.ui.order.orderutility.OderChartFragment"
+        android:label="@string/fragment_order_chart"
+        tools:layout="@layout/fragment_oder_chart" />
 
 </navigation>

@@ -21,6 +21,6 @@
         android:layout_height="16dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        tools:src="@drawable/baseline_keyboard_arrow_down_black_24dp" />
+        tools:src="@drawable/ic_keyboard_arrow_down_24" />
 
 </RelativeLayout>

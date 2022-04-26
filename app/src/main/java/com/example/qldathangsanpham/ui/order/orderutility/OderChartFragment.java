@@ -1,5 +1,6 @@
 package com.example.qldathangsanpham.ui.order.orderutility;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,19 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.qldathangsanpham.DatabaseHelper;
 import com.example.qldathangsanpham.R;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +37,9 @@ public class OderChartFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View view;
+    private Context context;
 
     public OderChartFragment() {
         // Required empty public constructor
@@ -59,7 +75,28 @@ public class OderChartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_oder_chart, container, false);
+        context = container.getContext();
+        view = inflater.inflate(R.layout.fragment_oder_chart, container, false);
+        PieChart orderChart = view.findViewById(R.id.pc_order_pie_chart);
+        List<Map<String, String>> datas = DatabaseHelper.getDataForOderChart(view.getContext());
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        for (Map<String, String> data :
+                datas) {
+            System.out.println(data.get("SLDDH"));
+            System.out.println(data.get(DatabaseHelper.CL_HO_TEN));
+            entries.add(new PieEntry(Integer.parseInt(data.get("SLDDH")), "(" + data.get(DatabaseHelper.CL_ID) + ") " + data.get(DatabaseHelper.CL_HO_TEN)));
+        }
+        PieDataSet pieDataSet = new PieDataSet(entries, "Biểu đồ số lượng đơn hàng của khách hàng");
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setValueTextColor(R.color.white);
+        pieDataSet.setValueTextSize(16f);
+
+        PieData pieData = new PieData(pieDataSet);
+        orderChart.setData(pieData);
+        orderChart.getDescription().setEnabled(false);
+        orderChart.animate();
+        return view;
     }
+
+
 }
