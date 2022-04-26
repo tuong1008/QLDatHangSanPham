@@ -160,7 +160,7 @@ public class MainSanPham extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = new Intent(MainSanPham.this, FormSanPham.class);
-                intent.putExtra("SAN_PHAM", sanPhamList.get(position));
+                intent.putExtra("SAN_PHAM", adapter.getItem(position));
 
                 sanPhamFormLauncher.launch(intent);
             }

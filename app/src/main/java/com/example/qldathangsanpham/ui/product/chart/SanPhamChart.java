@@ -60,14 +60,13 @@ public class SanPhamChart extends AppCompatActivity {
                 String key = sp.getXuatXu();
                 if (count.containsKey(key)) {
                     count.put(sp.getXuatXu(), count.get(key) + 1);
-                }
-                else {
+                } else {
                     count.put(key, 1);
                 }
             }
 
             for (String s : count.keySet()) {
-                if(count.get(s) <= 0) {
+                if (count.get(s) <= 0) {
                     continue;
                 }
                 JSONObject jObject = new JSONObject();
