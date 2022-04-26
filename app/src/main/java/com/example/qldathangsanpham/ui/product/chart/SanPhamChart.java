@@ -41,7 +41,7 @@ public class SanPhamChart extends AppCompatActivity {
         webView.getSettings().setDomStorageEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
-        webView.addJavascriptInterface(new JavaScriptInterface(this), "Android");
+        webView.addJavascriptInterface(new JavaScriptInterface(), "Android");
 
         webView.loadUrl("file:///android_asset/GeoChart.html");
     }
@@ -49,14 +49,9 @@ public class SanPhamChart extends AppCompatActivity {
     private class JavaScriptInterface {
         Context context;
 
-        public JavaScriptInterface(Context context) {
-            this.context = context;
-        }
 
         @JavascriptInterface
         public String getCountryData() throws JSONException {
-            Log.d(TAG, "js calling for data");
-
             JSONArray array = new JSONArray();
 
             HashMap<String, Integer> count = new HashMap<>();
@@ -81,9 +76,6 @@ public class SanPhamChart extends AppCompatActivity {
 
                 array.put(jObject);
             }
-
-            Log.d(SanPhamChart.class.getName(), "Array to send:\n" + array);
-
             return array.toString();
         }
 
