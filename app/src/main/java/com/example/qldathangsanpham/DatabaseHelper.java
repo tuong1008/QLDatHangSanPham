@@ -327,11 +327,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertHoSoKhachHang(db, "Võ Đặng Kế Định", "Thủ Đức, TPHCM", "0987912345", "1");
         insertHoSoKhachHang(db, "Cao Thành Lợi", "Thủ Đức, TPHCM", "1275849586", "1");
         insertHoSoKhachHang(db, "Bùi Tấn Sang", "Thủ Đức, TPHCM", "9057485769", "1");
-        insertSanPham(db, "TV Samsung 55 inch", 20000000, "Hàn Quốc");
-        insertSanPham(db, "Tủ Lạnh Panasonic 2 Ngăn", 10000000, "Nhật Bản");
-        insertSanPham(db, "TV Sony 40 inch", 15000000, "Nhật Bản");
-        insertSanPham(db, "Máy Giặt Sharp 10L", 7000000, "Nhật Bản");
-        insertSanPham(db, "Laptop Dell Inspiron 7559", 14000000, "USA");
+        insertSanPham(db, "TV Samsung 55 inch", 20000000, "VN");
+        insertSanPham(db, "Tủ Lạnh Panasonic 2 Ngăn", 10000000, "JP");
+        insertSanPham(db, "TV Sony 40 inch", 15000000, "KR");
+        insertSanPham(db, "Máy Giặt Sharp 10L", 7000000, "RU");
+        insertSanPham(db, "Laptop Dell Inspiron 7559", 14000000, "US");
         insertDonDatHang(db, Utility.getCurrentDateTime(), 1, 1);
         insertDonDatHang(db, Utility.getCurrentDateTime(), 2, 2);
         insertDonDatHang(db, Utility.getCurrentDateTime(), 3, 3);
@@ -543,4 +543,3 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 }
-
