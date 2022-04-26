@@ -95,7 +95,7 @@ public class MainSanPham extends AppCompatActivity {
                 startActivity(intent);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + item.getItemId());
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }
