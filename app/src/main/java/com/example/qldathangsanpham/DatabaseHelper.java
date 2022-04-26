@@ -316,6 +316,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    @SuppressLint("Range")
+    public static List<Map<String, String>> getDataForOderChart(Context context) {
+        List<Map<String, String>> list = new ArrayList<>();
+        String query = "SELECT COUNT( DDH." + CL_ID + ") AS SLDDH ,KH." + CL_HO_TEN + " ,KH." + CL_ID
+                + " FROM " + TB_DON_DAT_HANG + " AS DDH JOIN " + TB_HO_SO_KHACH_HANG + " AS KH ON DDH."
+                + CL_HO_SO_KHACH_HANG_ID + " = KH." + CL_ID + " GROUP BY KH." + CL_ID;
+//        String query = "SELECT COUNT(" + CL_ID + ") AS SLDDH ," + CL_HO_SO_KHACH_HANG_ID
+//                + " FROM " + TB_DON_DAT_HANG + " ORDER BY " + CL_HO_SO_KHACH_HANG_ID;
+        try {
+            SQLiteOpenHelper databaseHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = databaseHelper.getReadableDatabase();
+            Cursor cursor = db.rawQuery(query, null);
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                Map<String, String> map = new HashMap<>();
+                map.put(CL_ID, String.valueOf(cursor.getString(cursor.getColumnIndex(CL_ID))));
+                map.put(CL_HO_TEN, cursor.getString(cursor.getColumnIndex(CL_HO_TEN)));
+                map.put("SLDDH", String.valueOf(cursor.getString(cursor.getColumnIndex("SLDDH"))));
+                list.add(map);
+            }
+            cursor.close();
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return list;
+    }
+
     private void insertData(SQLiteDatabase db) {
         insertTaiKhoanNhanVien(db, "nguyenmanhtuong@gmail.com", "nguyenmanhtuong");
         insertTaiKhoanNhanVien(db, "buiminhto@gmail.com", "buiminhto");

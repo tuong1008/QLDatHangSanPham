@@ -73,5 +73,7 @@
     <string name="tenSP">Tên sản phẩm</string>
     <string name="xuatXu">Xuất xứ</string>
     <string name="gia">Giá</string>
+    <string name="order_chart">Xem biểu đồ</string>
+    <string name="fragment_order_chart">Biểu đồ đơn hàng</string>
 
 </resources>
