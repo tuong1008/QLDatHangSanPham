@@ -17,7 +17,6 @@ class LoggedInUserView {
 
     public LoggedInUserView(String displayName, String id) {
         this.displayName = displayName;
-
         this.id = id;
     }
 

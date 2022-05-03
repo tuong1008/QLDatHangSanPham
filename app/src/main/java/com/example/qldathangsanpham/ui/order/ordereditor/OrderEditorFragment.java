@@ -135,6 +135,7 @@ public class OrderEditorFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_order_editor, container, false);
         this.context = container.getContext();
+        //
         orderId = OrderEditorFragmentArgs.fromBundle(getArguments()).getOrderId();
         customerId = OrderEditorFragmentArgs.fromBundle(getArguments()).getCustomerId();
 

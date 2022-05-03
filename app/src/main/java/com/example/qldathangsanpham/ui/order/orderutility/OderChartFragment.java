@@ -77,13 +77,15 @@ public class OderChartFragment extends Fragment {
                              Bundle savedInstanceState) {
         context = container.getContext();
         view = inflater.inflate(R.layout.fragment_oder_chart, container, false);
+
+
         PieChart orderChart = view.findViewById(R.id.pc_order_pie_chart);
         List<Map<String, String>> datas = DatabaseHelper.getDataForOderChart(view.getContext());
         ArrayList<PieEntry> entries = new ArrayList<>();
         for (Map<String, String> data :
                 datas) {
-            System.out.println(data.get("SLDDH"));
-            System.out.println(data.get(DatabaseHelper.CL_HO_TEN));
+//            System.out.println(data.get("SLDDH"));
+//            System.out.println(data.get(DatabaseHelper.CL_HO_TEN));
             entries.add(new PieEntry(Integer.parseInt(data.get("SLDDH")), "(" + data.get(DatabaseHelper.CL_ID) + ") " + data.get(DatabaseHelper.CL_HO_TEN)));
         }
         PieDataSet pieDataSet = new PieDataSet(entries, "Biểu đồ số lượng đơn hàng của khách hàng");

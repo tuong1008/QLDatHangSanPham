@@ -120,7 +120,6 @@ public class OrderHomeFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
-
                 final int position = viewHolder.getAdapterPosition();
                 final Map<String, String> item = adapter.getItems().get(position);
 
@@ -189,10 +188,8 @@ public class OrderHomeFragment extends Fragment {
     }
 
     private void filter(String text) {
-        // creating a new array list to filter our data.
         List<Map<String, String>> filterList = new ArrayList<>();
 
-        // running a for loop to compare elements.
         for (Map<String, String> item : items) {
             if (item.get(DatabaseHelper.CL_ID).toLowerCase().contains(text.toLowerCase())
                     || item.get(DatabaseHelper.CL_HO_TEN).toLowerCase().contains(text.toLowerCase())) {
